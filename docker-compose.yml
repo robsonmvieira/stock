@@ -4,44 +4,43 @@ services:
   app:
     build: .
     ports:
-      - "3001:3000"
+      - "4001:3000"
     volumes:
       - .:/home/node/app
-    container_name: app-bff
+    container_name: stock-API
     restart: always
-    depends_on:
-      - db
-      - redis
-  db:
-    env_file:
-      - ./envs/.env
-    platform: linux/x86_64
-    image: postgres:14
-    container_name: database-bff
-    restart: always
-    ports:
-      - "5434:5432"
+    # depends_on:
+    #   - db
+    # - redis
+  # db:
+  #   env_file:
+  #     - ./envs/.env
+  #   platform: linux/x86_64
+  #   image: postgres:14
+  #   container_name: database-bff
+  #   restart: always
+  #   ports:
+  #     - "5435:5432"
 
-    volumes:
-      - .postgres_data:/var/lib/postgresql/data/
-    environment:
-      # - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=bffDb
+  #   volumes:
+  #     - .postgres_data:/var/lib/postgresql/data/
+  #   environment:
+  #     # - POSTGRES_HOST_AUTH_METHOD=trust
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=bffDb
+#   redis:
+#     env_file:
+#       - ./envs/.env
+#     image: redis
+#     container_name: app-bff-redis
+#     restart: always
+#     volumes:
+#       - redis-data:/data
+#     ports:
+#       - "6379:6379"
+#     environment:
+#       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
-  redis:
-    env_file:
-      - ./envs/.env
-    image: redis
-    container_name: app-bff-redis
-    restart: always
-    volumes:
-      - redis-data:/data
-    ports:
-      - "6379:6379"
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-
-volumes:
-  redis-data:
+# volumes:
+#   redis-data:
