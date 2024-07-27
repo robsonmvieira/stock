@@ -53,7 +53,7 @@ export class Employee extends Entity {
     updated_at
   }: EmployeeProps) {
     super(id, created_at, updated_at)
-    this.id = id
+
     this.firstName = firstName
     this.lastName = lastName
     this.email = EmailVO.create(email)
@@ -130,11 +130,12 @@ export class Employee extends Entity {
       id: this.id.id,
       firstName: this.firstName,
       lastName: this.lastName,
-      email: this.email,
+      email: this.email.value,
       phone: this.phone,
       hireDate: this.hireDate,
       credencialNumber: this.credencialNumber,
-      gestorId: this.gestorId
+      gestorId: this.gestorId,
+      document: this.document.value
     }
   }
 }
