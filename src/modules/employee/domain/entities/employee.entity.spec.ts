@@ -1,12 +1,12 @@
 import Chance from 'chance'
 
-import { UuidException } from 'src/modules/core/exceptions'
 import {
   createEmployeeUsingConstructor,
   createEmployeeUsingStaticMethod,
   createEmployeeWithInvalidEmail,
   createEmployeeWithInvalidId
 } from '../testDataBuilder/employee.tdb'
+import { UuidException } from 'src/modules/core/domain/exceptions'
 
 describe('Employee Entity Unit Tests', () => {
   let chance: Chance.Chance

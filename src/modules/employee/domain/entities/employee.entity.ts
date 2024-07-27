@@ -1,5 +1,5 @@
-import { Entity } from 'src/modules/core/entities/entity'
-import { ValueObject } from 'src/modules/core/valueObject'
+import { Entity } from 'src/modules/core/domain/entities/entity'
+import { ValueObject } from 'src/modules/core/domain/valueObject'
 import { EmployeeId } from '../valueObjects/employee.uuid'
 import { EmailVO } from '../valueObjects/email.vo'
 import { CPFVO } from '../valueObjects/cpf.vo'

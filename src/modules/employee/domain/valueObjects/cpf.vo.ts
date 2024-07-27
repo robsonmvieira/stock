@@ -1,4 +1,4 @@
-import { ValueObject } from 'src/modules/core/valueObject'
+import { ValueObject } from 'src/modules/core/domain/valueObject'
 
 export class CPFVO extends ValueObject {
   private readonly cpf: string
