@@ -14,7 +14,8 @@ function createEmployeeUsingConstructor(): Employee {
     hireDate: new Date(),
     credencialNumber: Chance.guid({ version: 4 }),
     gestorId: Chance.guid({ version: 4 }),
-    document: Chance.cpf()
+    document: Chance.cpf(),
+    jobPosition: Chance.guid({ version: 4 })
   })
 }
 
@@ -28,7 +29,8 @@ function createEmployeeUsingStaticMethod(): Employee {
     hireDate: new Date(),
     credencialNumber: Chance.guid({ version: 4 }),
     gestorId: Chance.guid({ version: 4 }),
-    document: Chance.cpf()
+    document: Chance.cpf(),
+    jobPosition: Chance.guid({ version: 4 })
   })
 }
 
@@ -44,7 +46,8 @@ function createEmployeeWithInvalidId(): Employee {
     credencialNumber: Chance.guid({ version: 4 }),
     gestorId: Chance.guid({ version: 4 }),
     document: Chance.cpf(),
-    id: new EmployeeId('invalid')
+    id: new EmployeeId('invalid'),
+    jobPosition: Chance.guid({ version: 4 })
   })
 }
 
@@ -59,7 +62,8 @@ function createEmployeeWithInvalidEmail(): Employee {
     hireDate: new Date(),
     credencialNumber: Chance.guid({ version: 4 }),
     gestorId: Chance.guid({ version: 4 }),
-    document: Chance.cpf()
+    document: Chance.cpf(),
+    jobPosition: Chance.guid({ version: 4 })
   })
 }
 
