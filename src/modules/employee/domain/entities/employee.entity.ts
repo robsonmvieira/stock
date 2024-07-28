@@ -13,6 +13,7 @@ export type CreateEmployeeCommand = {
   credencialNumber: string
   gestorId: string
   document: string
+  jobPosition: string
 }
 
 export type EmployeeProps = {
@@ -27,6 +28,12 @@ export type EmployeeProps = {
   created_at?: Date
   updated_at?: Date
   document: string
+  jobPosition: string
+  vacationDays?: number
+  vacationDaysUsed?: number
+  vacationDaysRemaining?: number
+  vactionInUsed?: boolean
+  fireDate?: Date
 }
 
 export class Employee extends Entity {
@@ -38,6 +45,12 @@ export class Employee extends Entity {
   credencialNumber: string
   gestorId: string
   document: CPFVO
+  jobPosition: string
+  vacationDays?: number
+  vacationDaysUsed?: number
+  vacationDaysRemaining?: number
+  vactionInUsed?: boolean
+  fireDate?: Date
 
   constructor({
     firstName,
@@ -48,34 +61,48 @@ export class Employee extends Entity {
     credencialNumber,
     gestorId,
     document,
+    jobPosition,
+    vacationDays,
+    vacationDaysUsed,
+    vacationDaysRemaining,
+    vactionInUsed,
+    fireDate,
     id,
     created_at,
     updated_at
   }: EmployeeProps) {
     super(id, created_at, updated_at)
 
-    this.firstName = firstName
-    this.lastName = lastName
-    this.email = EmailVO.create(email)
     this.phone = phone
+    this.lastName = lastName
     this.hireDate = hireDate
-    this.credencialNumber = credencialNumber
     this.gestorId = gestorId
+    this.firstName = firstName
+    this.jobPosition = jobPosition
+    this.email = EmailVO.create(email)
     this.document = CPFVO.create(document)
-
+    this.credencialNumber = credencialNumber
+    // eslint-disable-next-line prettier/prettier
+    this.vacationDays = vacationDays ?? 30,
+      // eslint-disable-next-line prettier/prettier
+    this.vacationDaysUsed = vacationDaysUsed ?? 0
+    this.vacationDaysRemaining = vacationDaysRemaining ?? 30
+    this.vactionInUsed = vactionInUsed ?? false
+    this.fireDate = fireDate
     this.validate()
   }
 
   static create(command: CreateEmployeeCommand) {
     const employee = new Employee({
-      firstName: command.firstName,
-      lastName: command.lastName,
       email: command.email,
       phone: command.phone,
+      lastName: command.lastName,
       hireDate: command.hireDate,
-      credencialNumber: command.credencialNumber,
       gestorId: command.gestorId,
-      document: command.document
+      document: command.document,
+      firstName: command.firstName,
+      jobPosition: command.jobPosition,
+      credencialNumber: command.credencialNumber
     })
     return employee
   }
@@ -135,7 +162,8 @@ export class Employee extends Entity {
       hireDate: this.hireDate,
       credencialNumber: this.credencialNumber,
       gestorId: this.gestorId,
-      document: this.document.value
+      document: this.document.value,
+      jobPosition: this.jobPosition
     }
   }
 }
