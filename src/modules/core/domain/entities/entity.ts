@@ -6,6 +6,9 @@ export abstract class Entity {
   created_at: Date
   updated_at: Date | null
   notification: Notification
+  is_deleted: boolean
+  deleted_at: Date
+  is_blocked: boolean
 
   constructor(id?: UuidVO, created_at?: Date, updated_at?: Date) {
     this.id = id ?? UuidVO.create()

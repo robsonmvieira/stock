@@ -13,6 +13,9 @@ export abstract class Model {
   @Column({ nullable: true, default: false })
   is_deleted: boolean
 
+  @Column({ nullable: true, default: false })
+  is_blocked: boolean
+
   @Column({ nullable: true })
   deleted_at: Date
 
