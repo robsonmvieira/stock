@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common'
-import { CreateEmployeeUsecase, CreateEmployeeDto } from '../use-cases/employee'
+import { CreateEmployeeUseCase, CreateEmployeeDto } from '../use-cases/employee'
 
 @Controller('employee')
 export class EmployeeController {
   // @Inject() private listCheckListUseCase: ListCheckListUseCase
-  @Inject() private createEmployeeUseCase: CreateEmployeeUsecase
+  @Inject() private createEmployeeUseCase: CreateEmployeeUseCase
   // @Inject() private getCheckListByIdUseCase: GetCheckListByIdUseCase
 
   @Get()
