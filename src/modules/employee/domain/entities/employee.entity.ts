@@ -15,6 +15,7 @@ export type CreateEmployeeCommand = {
   gestorId: string
   document: string
   jobPosition: string
+  initialPassword: string
 }
 
 export type EmployeeProps = {
@@ -35,6 +36,9 @@ export type EmployeeProps = {
   vacationDaysRemaining?: number
   vactionInUsed?: boolean
   fireDate?: Date
+  initialPassword: string | null
+  password?: string
+  userChangePassword?: boolean
 }
 
 export class Employee extends Entity {
@@ -52,6 +56,9 @@ export class Employee extends Entity {
   vacationDaysRemaining?: number
   vactionInUsed?: boolean
   fireDate?: Date
+  password: string
+  initialPassword: string | null
+  userChangePassword: boolean
 
   constructor({
     firstName,
@@ -68,6 +75,9 @@ export class Employee extends Entity {
     vacationDaysRemaining,
     vactionInUsed,
     fireDate,
+    password,
+    initialPassword,
+    userChangePassword,
     id,
     created_at,
     updated_at
@@ -90,6 +100,9 @@ export class Employee extends Entity {
     this.vacationDaysRemaining = vacationDaysRemaining ?? 30
     this.vactionInUsed = vactionInUsed ?? false
     this.fireDate = fireDate
+    this.password = password
+    this.initialPassword = initialPassword
+    this.userChangePassword = userChangePassword
     this.validate()
   }
 
@@ -103,13 +116,23 @@ export class Employee extends Entity {
       document: command.document,
       firstName: command.firstName,
       jobPosition: command.jobPosition,
-      credencialNumber: command.credencialNumber
+      credencialNumber: command.credencialNumber,
+      initialPassword: command.initialPassword,
+      userChangePassword: false,
+      password: null
     })
     return employee
   }
 
   validate() {
     this.emailIsValid()
+  }
+
+  changeUserPassword(password: string) {
+    this.userChangePassword = true
+    this.initialPassword = null
+    this.password = password
+    this.validate()
   }
 
   static fake() {

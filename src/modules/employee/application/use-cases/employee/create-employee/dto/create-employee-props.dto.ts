@@ -8,4 +8,5 @@ export type CreateEmployeeProps = {
   gestorId: string
   document: string
   jobPosition: string
+  password: string
 }

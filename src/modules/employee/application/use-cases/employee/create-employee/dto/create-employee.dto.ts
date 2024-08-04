@@ -53,6 +53,11 @@ export class CreateEmployeeDto {
   @IsString()
   jobPosition: string
 
+  @ApiProperty({ description: 'user initial password' })
+  @IsNotEmpty()
+  @IsString()
+  password: string
+
   constructor(props: CreateEmployeeProps) {
     if (!props) return
 
