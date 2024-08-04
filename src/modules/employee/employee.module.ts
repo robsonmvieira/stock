@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm'
 import { EmployeeTypeORMRepository } from './infra'
 import { EmployeeModel } from './domain/models'
 import { CreateEmployeeUseCase } from './application/use-cases/employee'
-import { DatabaseModule } from '@modules/database/database.module'
+import { DatabaseModule } from 'src/modules/database/database.module'
 import { CacheModule } from 'src/cache/cache.module'
 import { EmployeeController } from './application/controllers/employee.controller'
 
