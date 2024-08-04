@@ -13,9 +13,9 @@ import { EmployeeController } from './application/controllers/employee.controlle
   providers: [
     {
       provide: 'IEmployeeRepository',
-      useFactory: (data: DataSource) => {
-        new EmployeeTypeORMRepository(data.getRepository(EmployeeModel))
-      }
+      useFactory: (data: DataSource) =>
+        new EmployeeTypeORMRepository(data.getRepository(EmployeeModel)),
+      inject: ['dbConnectionTypeOrm']
     },
     CreateEmployeeUseCase
   ]
