@@ -2,11 +2,14 @@ import { Module } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 import { EmployeeTypeORMRepository } from './infra'
 import { EmployeeModel } from './domain/models'
-import { CreateEmployeeUsecase } from './application/use-cases/employee'
+import { CreateEmployeeUseCase } from './application/use-cases/employee'
+import { DatabaseModule } from '@modules/database/database.module'
+import { CacheModule } from 'src/cache/cache.module'
+import { EmployeeController } from './application/controllers/employee.controller'
 
 @Module({
-  imports: [],
-  controllers: [],
+  imports: [DatabaseModule, CacheModule],
+  controllers: [EmployeeController],
   providers: [
     {
       provide: 'IEmployeeRepository',
@@ -14,7 +17,7 @@ import { CreateEmployeeUsecase } from './application/use-cases/employee'
         new EmployeeTypeORMRepository(data.getRepository(EmployeeModel))
       }
     },
-    CreateEmployeeUsecase
+    CreateEmployeeUseCase
   ]
 })
 export class EmployeeModule {}

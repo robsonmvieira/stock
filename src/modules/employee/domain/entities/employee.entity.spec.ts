@@ -7,6 +7,7 @@ import {
   createEmployeeWithInvalidId
 } from '../testDataBuilder/employee.tdb'
 import { UuidException } from 'src/modules/core/domain/exceptions'
+import { Employee } from './employee.entity'
 
 describe('Employee Entity Unit Tests', () => {
   let chance: Chance.Chance
@@ -55,11 +56,16 @@ describe('Employee Entity Unit Tests', () => {
   })
 
   it('should call addErrorOnContainer function when email is invalid is passed as argument', () => {
-    const employee = createEmployeeUsingConstructor()
-    employee.updateEmail('123')
-    expect(employee.notification.hasError()).toBeTruthy()
-    expect(employee.emailIsValid()).toBeFalsy()
-    expect(employee.notification.count()).toBe(1)
+    const fakeEntity = Employee.fake()
+
+    const employeeWithEmailError = fakeEntity
+      .aEmployee()
+      .withEmail('123')
+      .build()
+
+    expect(employeeWithEmailError.notification.hasError()).toBeTruthy()
+    expect(employeeWithEmailError.emailIsValid()).toBeFalsy()
+    expect(employeeWithEmailError.notification.count()).toBe(1)
   })
 
   it('should return a value object when entity_id is called', () => {

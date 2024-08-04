@@ -3,6 +3,7 @@ import { ValueObject } from 'src/modules/core/domain/valueObject'
 import { EmployeeId } from '../valueObjects/employee.uuid'
 import { EmailVO } from '../valueObjects/email.vo'
 import { CPFVO } from '../valueObjects/cpf.vo'
+import { EmployeeFakeBuilder } from '../tests/employee.fake-builder'
 
 export type CreateEmployeeCommand = {
   firstName: string
@@ -109,6 +110,10 @@ export class Employee extends Entity {
 
   validate() {
     this.emailIsValid()
+  }
+
+  static fake() {
+    return EmployeeFakeBuilder
   }
 
   emailIsValid(): boolean {
