@@ -3,13 +3,15 @@ import { EmployeeModule } from './modules/employee/employee.module'
 import { ConfigModule } from './modules/config/config.module'
 import { DatabaseModule } from './modules/database/database.module'
 import { CacheModule } from './cache/cache.module'
+import { SessionModule } from './modules/session/session.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
     CacheModule,
-    EmployeeModule
+    EmployeeModule,
+    SessionModule
   ],
   controllers: [],
   providers: []
