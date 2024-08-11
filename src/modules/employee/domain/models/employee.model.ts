@@ -71,10 +71,10 @@ export class EmployeeModel extends Model {
   vactionInUsed?: boolean
 
   @Column({ nullable: true })
-  password: string | null
+  password?: string
 
   @Column({ nullable: true })
-  initialPassword: string | null
+  initialPassword: string
 
   @Column({ type: 'boolean' })
   userChangePassword: boolean
