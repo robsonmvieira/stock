@@ -20,6 +20,13 @@ export class EmployeeFakeBuilder<TBuild = any> {
   private _lastName: PropertyOrFactory<string> | undefined = _index =>
     this.chance.name({ nationality: 'en' })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private _initialPassword: PropertyOrFactory<string> | undefined = _index =>
+    this.chance.hash({ length: 12 })
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private _password: PropertyOrFactory<string> | undefined = _index =>
+    this.chance.hash({ length: 12 })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _email: PropertyOrFactory<string> | undefined = _index =>
     this.chance.email({ domain: 'example.com' })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,6 +92,11 @@ export class EmployeeFakeBuilder<TBuild = any> {
   }
 
   withPhone(phone: PropertyOrFactory<string>): this {
+    this._phone = phone
+    return this
+  }
+
+  withPassword(phone: PropertyOrFactory<string>): this {
     this._phone = phone
     return this
   }
@@ -163,7 +175,9 @@ export class EmployeeFakeBuilder<TBuild = any> {
             index
           ),
           vactionInUsed: this.callFactory(this._vactionInUsed, index),
-          fireDate: this.callFactory(this._fireDate, index)
+          fireDate: this.callFactory(this._fireDate, index),
+          password: this.callFactory(this._password, index),
+          initialPassword: this.callFactory(this._initialPassword, index)
         })
 
         return employee
@@ -224,6 +238,14 @@ export class EmployeeFakeBuilder<TBuild = any> {
     return this.getValue('document')
   }
 
+  get password() {
+    return this.getValue('password')
+  }
+
+  get initialPassword() {
+    return this.getValue('initialPassword')
+  }
+
   get jobPosition() {
     return this.getValue('jobPosition')
   }
@@ -243,8 +265,6 @@ export class EmployeeFakeBuilder<TBuild = any> {
   get vactionInUsed() {
     return this.getValue('vactionInUsed')
   }
-
-  // generate others properties getters
 
   get fireDate() {
     return this.getValue('fireDate')

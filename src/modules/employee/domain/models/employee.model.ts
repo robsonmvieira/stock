@@ -25,6 +25,7 @@ export type EmployeeModelProps = {
   password: string
   initialPassword: string | null
   userChangePassword: boolean
+  isManager?: boolean
 }
 @Entity({ name: 'employee' })
 export class EmployeeModel extends Model {
@@ -55,26 +56,29 @@ export class EmployeeModel extends Model {
   @Column({ type: 'uuid' })
   jobPosition: string
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   vacationDays?: number
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   vacationDaysUsed?: number
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   vacationDaysRemaining?: number
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   fireDate?: Date
 
   @Column({ type: 'boolean' })
   vactionInUsed?: boolean
 
-  @Column({ nullable: true })
-  password: string | null
+  @Column({ type: 'boolean', default: false })
+  isManager?: boolean
 
   @Column({ nullable: true })
-  initialPassword: string | null
+  password?: string
+
+  @Column({ nullable: true })
+  initialPassword?: string
 
   @Column({ type: 'boolean' })
   userChangePassword: boolean
@@ -105,5 +109,6 @@ export class EmployeeModel extends Model {
     this.password = props?.password
     this.initialPassword = props?.initialPassword
     this.userChangePassword = props?.userChangePassword
+    this.isManager = props?.isManager
   }
 }
