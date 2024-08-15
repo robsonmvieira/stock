@@ -2,19 +2,24 @@ import { Module } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 import { EmployeeTypeORMRepository } from './infra'
 import { EmployeeModel } from './domain/models'
-import { CreateEmployeeUsecase } from './application/use-cases/employee'
+import { CreateEmployeeUseCase } from './application/use-cases/employee'
+import { DatabaseModule } from 'src/modules/database/database.module'
+import { CacheModule } from 'src/cache/cache.module'
+import { EmployeeController } from './application/controllers/employee.controller'
+import { EncryptModule } from '@modules/encrypt/encrypt.module'
 
 @Module({
-  imports: [],
-  controllers: [],
+  imports: [DatabaseModule, CacheModule, EncryptModule],
+  controllers: [EmployeeController],
   providers: [
     {
       provide: 'IEmployeeRepository',
-      useFactory: (data: DataSource) => {
-        new EmployeeTypeORMRepository(data.getRepository(EmployeeModel))
-      }
+      useFactory: (data: DataSource) =>
+        new EmployeeTypeORMRepository(data.getRepository(EmployeeModel)),
+      inject: ['dbConnectionTypeOrm']
     },
-    CreateEmployeeUsecase
-  ]
+    CreateEmployeeUseCase
+  ],
+  exports: ['IEmployeeRepository']
 })
 export class EmployeeModule {}

@@ -42,3 +42,6 @@ GoodLuckApi
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# src/mock.ts
+/mock.ts

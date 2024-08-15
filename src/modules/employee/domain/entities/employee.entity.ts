@@ -3,6 +3,7 @@ import { ValueObject } from 'src/modules/core/domain/valueObject'
 import { EmployeeId } from '../valueObjects/employee.uuid'
 import { EmailVO } from '../valueObjects/email.vo'
 import { CPFVO } from '../valueObjects/cpf.vo'
+import { EmployeeFakeBuilder } from '../tests/employee.fake-builder'
 
 export type CreateEmployeeCommand = {
   firstName: string
@@ -14,6 +15,7 @@ export type CreateEmployeeCommand = {
   gestorId: string
   document: string
   jobPosition: string
+  initialPassword: string
 }
 
 export type EmployeeProps = {
@@ -34,6 +36,10 @@ export type EmployeeProps = {
   vacationDaysRemaining?: number
   vactionInUsed?: boolean
   fireDate?: Date
+  initialPassword: string | null
+  password?: string
+  userChangePassword?: boolean
+  isManager?: boolean
 }
 
 export class Employee extends Entity {
@@ -51,6 +57,10 @@ export class Employee extends Entity {
   vacationDaysRemaining?: number
   vactionInUsed?: boolean
   fireDate?: Date
+  password: string
+  initialPassword: string | null
+  userChangePassword: boolean
+  isManager: boolean
 
   constructor({
     firstName,
@@ -67,6 +77,10 @@ export class Employee extends Entity {
     vacationDaysRemaining,
     vactionInUsed,
     fireDate,
+    password,
+    initialPassword,
+    userChangePassword,
+    isManager,
     id,
     created_at,
     updated_at
@@ -89,6 +103,10 @@ export class Employee extends Entity {
     this.vacationDaysRemaining = vacationDaysRemaining ?? 30
     this.vactionInUsed = vactionInUsed ?? false
     this.fireDate = fireDate
+    this.password = password
+    this.initialPassword = initialPassword
+    this.userChangePassword = userChangePassword ?? false
+    this.isManager = isManager ?? false
     this.validate()
   }
 
@@ -102,13 +120,27 @@ export class Employee extends Entity {
       document: command.document,
       firstName: command.firstName,
       jobPosition: command.jobPosition,
-      credencialNumber: command.credencialNumber
+      credencialNumber: command.credencialNumber,
+      initialPassword: command.initialPassword,
+      userChangePassword: false,
+      password: null
     })
     return employee
   }
 
   validate() {
     this.emailIsValid()
+  }
+
+  changeUserPassword(password: string) {
+    this.userChangePassword = true
+    this.initialPassword = null
+    this.password = password
+    this.validate()
+  }
+
+  static fake() {
+    return EmployeeFakeBuilder
   }
 
   emailIsValid(): boolean {

@@ -1,46 +1,46 @@
-version: "3"
+version: '3'
 
 services:
   app:
     build: .
     ports:
-      - "4001:3000"
+      - '4001:3000'
     volumes:
       - .:/home/node/app
     container_name: stock-API
     restart: always
-    # depends_on:
-    #   - db
-    # - redis
-  # db:
-  #   env_file:
-  #     - ./envs/.env
-  #   platform: linux/x86_64
-  #   image: postgres:14
-  #   container_name: database-bff
-  #   restart: always
-  #   ports:
-  #     - "5435:5432"
+    depends_on:
+      - db
+      - redis
 
-  #   volumes:
-  #     - .postgres_data:/var/lib/postgresql/data/
-  #   environment:
-  #     # - POSTGRES_HOST_AUTH_METHOD=trust
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_DB=bffDb
-#   redis:
-#     env_file:
-#       - ./envs/.env
-#     image: redis
-#     container_name: app-bff-redis
-#     restart: always
-#     volumes:
-#       - redis-data:/data
-#     ports:
-#       - "6379:6379"
-#     environment:
-#       - REDIS_PASSWORD=${REDIS_PASSWORD}
+  db:
+    env_file:
+      - ./envs/.env
+    platform: linux/x86_64
+    image: postgres:14
+    container_name: database-stock
+    restart: always
+    ports:
+      - 5435:5432
 
-# volumes:
-#   redis-data:
+    volumes:
+      - .postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=stockDb
+  redis:
+    env_file:
+      - ./envs/.env
+    image: redis
+    container_name: app-stock-redis
+    restart: always
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6380:6379
+    environment:
+      - REDIS_PASSWORD=redisDev123
+
+volumes:
+  redis-data:

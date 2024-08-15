@@ -3,7 +3,6 @@ import {
   IsNotEmpty,
   IsString,
   IsUUID,
-  IsDate,
   IsEmail,
   validateSync
 } from 'class-validator'
@@ -27,14 +26,12 @@ export class CreateEmployeeDto {
   email: string
 
   @ApiProperty({ description: 'employee of employee' })
-  @IsEmail()
   @IsNotEmpty()
   @IsString()
   phone: string
 
   @ApiProperty({ description: 'Hire date' })
   @IsNotEmpty()
-  @IsDate()
   hireDate: Date
 
   @ApiProperty({ description: 'gestorId id' })
@@ -52,6 +49,16 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @IsString()
   jobPosition: string
+
+  @ApiProperty({ description: 'user initial password' })
+  @IsNotEmpty()
+  @IsString()
+  password: string
+
+  @ApiProperty({ description: 'internal credencial number' })
+  @IsNotEmpty()
+  @IsUUID('4')
+  credencialNumber: string
 
   constructor(props: CreateEmployeeProps) {
     if (!props) return

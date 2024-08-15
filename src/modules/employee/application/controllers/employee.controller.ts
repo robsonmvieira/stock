@@ -1,23 +1,18 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common'
-import { CreateEmployeeUsecase, CreateEmployeeDto } from '../use-cases/employee'
-
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common'
+import { CreateEmployeeUseCase, CreateEmployeeDto } from '../use-cases/employee'
+import { Response } from 'express'
 @Controller('employee')
 export class EmployeeController {
-  // @Inject() private listCheckListUseCase: ListCheckListUseCase
-  @Inject() private createEmployeeUseCase: CreateEmployeeUsecase
-  // @Inject() private getCheckListByIdUseCase: GetCheckListByIdUseCase
+  @Inject() private createEmployeeUseCase: CreateEmployeeUseCase
 
-  @Get()
-  // async findAll() {
-  //   return this.listCheckListUseCase.execute()
-  // }
-
-  // @Get(':id')
-  // async findOne(@Param('id') id: string) {
-  //   return this.getCheckListByIdUseCase.execute(id)
-  // }
   @Post()
-  async create(@Body() dto: CreateEmployeeDto) {
-    return this.createEmployeeUseCase.execute(dto)
+  async create(@Res() response: Response, @Body() dto: CreateEmployeeDto) {
+    const data = await this.createEmployeeUseCase.execute(dto)
+
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+
+    return response.status(201).json(data)
   }
 }
