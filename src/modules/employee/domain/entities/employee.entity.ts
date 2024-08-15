@@ -39,6 +39,7 @@ export type EmployeeProps = {
   initialPassword: string | null
   password?: string
   userChangePassword?: boolean
+  isManager?: boolean
 }
 
 export class Employee extends Entity {
@@ -59,6 +60,7 @@ export class Employee extends Entity {
   password: string
   initialPassword: string | null
   userChangePassword: boolean
+  isManager: boolean
 
   constructor({
     firstName,
@@ -78,6 +80,7 @@ export class Employee extends Entity {
     password,
     initialPassword,
     userChangePassword,
+    isManager,
     id,
     created_at,
     updated_at
@@ -102,7 +105,8 @@ export class Employee extends Entity {
     this.fireDate = fireDate
     this.password = password
     this.initialPassword = initialPassword
-    this.userChangePassword = userChangePassword
+    this.userChangePassword = userChangePassword ?? false
+    this.isManager = isManager ?? false
     this.validate()
   }
 
