@@ -11,7 +11,7 @@ export class JwtService {
     })
   }
 
-  async verify(token: string): Promise<any> {
+  async verifyAsync(token: string): Promise<any> {
     try {
       return jwt.verify(token, this.configService.get<string>('JWT_SECRET'))
     } catch (error) {
