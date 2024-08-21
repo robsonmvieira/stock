@@ -14,10 +14,7 @@ export class LoginUseCase {
   ) {}
 
   async execute(loginData: LoginDto, response: Response): Promise<ModelOutput> {
-    // find user
     const user = await this.employeeRepository.findByEmail(loginData.email)
-    // compare hash
-
     if (!user) {
       return new ModelOutput({
         hasError: true,
@@ -25,9 +22,6 @@ export class LoginUseCase {
         error: 'email or password is invalid'
       })
     }
-
-    // happy path
-
     const isPasswordValid = await this.hashRepository.compare(
       loginData.password,
       user.initialPassword ? user.initialPassword : user.password
@@ -40,15 +34,12 @@ export class LoginUseCase {
         error: 'email or password is invalid'
       })
     }
-
     const payload = { email: loginData.email, userId: user.id }
-
     const token = await this.jwtService.signAsync(payload)
     response.cookie('Authorization', token, {
       secure: true,
       httpOnly: true
     })
-
     return new ModelOutput({
       hasError: false,
       data: token,
