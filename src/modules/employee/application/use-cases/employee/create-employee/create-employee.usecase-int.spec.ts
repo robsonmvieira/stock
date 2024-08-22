@@ -5,7 +5,7 @@ import { CreateEmployeeUseCase } from './create-employee.usecase'
 import { Test, TestingModule } from '@nestjs/testing'
 import { CreateEmployeeDto } from './dto'
 
-describe('Create employee Use Case', () => {
+describe('Create employee Use Case Integration Test', () => {
   let useCase: CreateEmployeeUseCase
   let repo: Partial<IEmployeeRepository>
   let hash: Partial<IEncryptPort>
