@@ -13,7 +13,6 @@ import { EncryptModule } from '@modules/encrypt/encrypt.module'
   controllers: [SessionController],
   providers: [
     JwtService,
-
     {
       provide: LoginUseCase,
       useFactory: (
