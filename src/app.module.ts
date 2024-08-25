@@ -8,6 +8,7 @@ import { EncryptModule } from './modules/encrypt/encrypt.module'
 import { SharedModule } from './modules/shared/shared.module'
 import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from '@modules/shared/auth/auth.guard'
+import { EmailModule } from '@modules/email/email.module'
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { AuthGuard } from '@modules/shared/auth/auth.guard'
     CacheModule,
     EmployeeModule,
     SessionModule,
-    EncryptModule
+    EncryptModule,
+    EmailModule
   ],
   controllers: [],
   providers: [
