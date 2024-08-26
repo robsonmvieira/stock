@@ -49,26 +49,26 @@ export class EmployeeMapper {
 
   static fromModelToOutput(model: EmployeeModel): any {
     return {
-      id: model.id,
-      firstName: model.firstName,
-      lastName: model.lastName,
-      email: model.email,
-      phone: model.phone,
-      hireDate: model.hireDate,
-      credencialNumber: model.credencialNumber,
-      gestorId: model.gestorId,
-      document: model.document,
-      jobPosition: model.jobPosition,
-      isManager: model.isManager,
-      created_at: model.created_at,
-      updated_at: model.updated_at,
-      deleted_at: model.deleted_at,
-      is_blocked: model.is_blocked,
-      is_deleted: model.is_deleted,
-      vacationDays: model.vacationDays,
-      vacationDaysUsed: model.vacationDaysUsed,
-      vacationDaysRemaining: model.vacationDaysRemaining,
-      vactionInUsed: model.vactionInUsed
+      id: model?.id,
+      firstName: model?.firstName,
+      lastName: model?.lastName,
+      email: model?.email,
+      phone: model?.phone,
+      hireDate: model?.hireDate,
+      credencialNumber: model?.credencialNumber,
+      gestorId: model?.gestorId,
+      document: model?.document,
+      jobPosition: model?.jobPosition,
+      isManager: model?.isManager,
+      created_at: model?.created_at,
+      updated_at: model?.updated_at,
+      deleted_at: model?.deleted_at,
+      is_blocked: model?.is_blocked,
+      is_deleted: model?.is_deleted,
+      vacationDays: model?.vacationDays,
+      vacationDaysUsed: model?.vacationDaysUsed,
+      vacationDaysRemaining: model?.vacationDaysRemaining,
+      vactionInUsed: model?.vactionInUsed
     }
   }
 }
