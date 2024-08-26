@@ -5,12 +5,15 @@ import { IEmployeeRepository } from '@modules/employee/domain/repositories'
 import { ModelOutput } from '@modules/core/application/usecases/common/model.output'
 import { IEncryptPort } from '@modules/encrypt/domain/repositories/encrypt.port'
 import { Response } from 'express'
+
+import { WelcomeQueueHandlerPublisher } from '@modules/email/handlers/welcome-handler/welcome-handler.service'
 @Injectable()
 export class LoginUseCase {
   constructor(
     private hashRepository: IEncryptPort,
     private jwtService: JwtService,
-    private employeeRepository: IEmployeeRepository
+    private employeeRepository: IEmployeeRepository,
+    private welcomeQueueHandlerPublisher: WelcomeQueueHandlerPublisher
   ) {}
 
   async execute(loginData: LoginDto, response: Response): Promise<ModelOutput> {
@@ -40,6 +43,12 @@ export class LoginUseCase {
       secure: true,
       httpOnly: true
     })
+
+    // await this.welcomeQueueHandlerPublisher.execute({
+    //   to: user.email,
+    //   subject: 'Welcome',
+    //   text: user.firstName
+    // })
     return new ModelOutput({
       hasError: false,
       data: token,
