@@ -7,7 +7,7 @@ import {
   GetInfoUseCase
 } from './application/use-cases/employee'
 import { DatabaseModule } from 'src/modules/database/database.module'
-import { CacheModule } from 'src/cache/cache.module'
+import { CacheModule } from 'src/modules/cache/cache.module'
 import { EmployeeController } from './application/controllers/employee.controller'
 import { EncryptModule } from '@modules/encrypt/encrypt.module'
 
