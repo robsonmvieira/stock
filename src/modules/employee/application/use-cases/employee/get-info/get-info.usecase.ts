@@ -7,7 +7,7 @@ export class GetInfoUseCase {
   @Inject('IEmployeeRepository')
   private repo: IEmployeeRepository
   async execute(id: string) {
-    const employee = await this.repo.findById(id)
+    const employee = await this.repo.fetchDashboardDataById(id)
     if (!employee) {
       return new ModelOutput({
         hasError: true,
