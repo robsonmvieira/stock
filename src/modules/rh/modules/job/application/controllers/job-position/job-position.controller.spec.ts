@@ -8,7 +8,6 @@ import {
   ModelCollectionOutput,
   ModelOutput
 } from '@modules/core/application/usecases/common'
-import { CreateJobPositionDto } from '../../use-cases/job-position/create-job-position-use-case/dto/create-job-position.props'
 
 describe('JobPositionController', () => {
   let controller: JobPositionController
