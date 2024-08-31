@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { EmployeeModule } from './modules/employee/employee.module'
+
 import { ConfigModule } from './modules/config/config.module'
 import { DatabaseModule } from './modules/database/database.module'
 import { CacheModule } from './modules/cache/cache.module'
@@ -9,6 +9,8 @@ import { SharedModule } from './modules/shared/shared.module'
 import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from '@modules/shared/auth/auth.guard'
 import { EmailModule } from '@modules/email/email.module'
+import { RhModule } from '@modules/rh/rh.module'
+import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
 
 @Module({
   imports: [
@@ -19,7 +21,8 @@ import { EmailModule } from '@modules/email/email.module'
     EmployeeModule,
     SessionModule,
     EncryptModule,
-    EmailModule
+    EmailModule,
+    RhModule
   ],
   controllers: [],
   providers: [
