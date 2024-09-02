@@ -7,7 +7,7 @@ export type ProductModelProps = {
   stockQuantity: number
   supplierId: string
   sku: string
-  imageUrl: string[]
+  images: string[]
   QuantityPurchased: number
   unitPrice: number
   totalAmount: number
@@ -45,8 +45,8 @@ export class ProductModel extends Model {
   @Column()
   sku: string
 
-  @Column({ type: 'text', array: true })
-  imageUrl: string[]
+  @Column({ type: 'text', array: true, default: [] })
+  images?: string[]
 
   @Column()
   QuantityPurchased: number
@@ -75,7 +75,7 @@ export class ProductModel extends Model {
     this.price = props?.price
     this.stockQuantity = props?.stockQuantity
     this.sku = props?.sku
-    this.imageUrl = props?.imageUrl
+    this.images = props?.images
     this.QuantityPurchased = props?.QuantityPurchased
     this.unitPrice = props?.unitPrice
     this.totalAmount = props?.totalAmount
