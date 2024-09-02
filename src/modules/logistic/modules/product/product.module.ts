@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common'
-import { CategoryController } from './application/controllers'
+import {
+  CategoryController,
+  ProductController
+} from './application/controllers'
 import {
   CreateCategoryUseCase,
   ListCategoryUseCase
@@ -11,7 +14,7 @@ import { CategoryModel } from './domain/models'
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [CategoryController],
+  controllers: [CategoryController, ProductController],
   providers: [
     CreateCategoryUseCase,
     ListCategoryUseCase,
