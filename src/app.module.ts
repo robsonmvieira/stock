@@ -11,6 +11,7 @@ import { AuthGuard } from '@modules/shared/auth/auth.guard'
 import { EmailModule } from '@modules/email/email.module'
 import { RhModule } from '@modules/rh/rh.module'
 import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
+import { LogisticModule } from '@modules/logistic/logistic.module'
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
     SessionModule,
     EncryptModule,
     EmailModule,
-    RhModule
+    RhModule,
+    LogisticModule
   ],
   controllers: [],
   providers: [

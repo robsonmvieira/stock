@@ -3,7 +3,6 @@ import { Column, Entity } from 'typeorm'
 import { DepartamentsEnum } from '../enums/departaments.enum'
 
 export type EmployeeModelProps = {
-  id?: string
   firstName: string
   lastName: string
   email: string
@@ -11,8 +10,6 @@ export type EmployeeModelProps = {
   hireDate: Date
   credencialNumber: string
   gestorId: string
-  created_at?: Date
-  updated_at?: Date
   document: string
   jobPosition: string
   vacationDays?: number
@@ -20,14 +17,18 @@ export type EmployeeModelProps = {
   vacationDaysRemaining?: number
   vactionInUsed?: boolean
   fireDate?: Date
-  is_deleted?: boolean
-  deleted_at?: Date
-  is_blocked?: boolean
   password: string
   initialPassword: string | null
   userChangePassword: boolean
+
+  id?: string
+  created_at?: Date
+  updated_at?: Date
   isManager?: boolean
   department?: string
+  is_deleted?: boolean
+  deleted_at?: Date
+  is_blocked?: boolean
 }
 @Entity({ name: 'employee' })
 export class EmployeeModel extends Model {
