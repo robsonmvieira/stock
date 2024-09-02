@@ -1,16 +1,16 @@
 import { Entity } from '@modules/core/domain/entities'
 import { ValueObject } from '@modules/core/domain/valueObject'
 import { CategoryId } from '../valueObject/category.uuid'
-import { Product } from './product.entity'
 
 type CreateCategoryCommand = {
   name: string
   description?: string
+  products?: string[]
 }
 type CategoryProps = {
   name: string
   description?: string
-  products: Product[]
+  products: string[]
 
   id?: CategoryId
   created_at?: Date
@@ -23,7 +23,7 @@ type CategoryProps = {
 export class Category extends Entity {
   name: string
   description?: string
-  products: Product[]
+  products: string[]
 
   constructor({
     name,
@@ -42,11 +42,11 @@ export class Category extends Entity {
     this.products = products
   }
 
-  static create({ name, description }: CreateCategoryCommand) {
+  static create({ name, description, products }: CreateCategoryCommand) {
     return new Category({
       name,
       description,
-      products: []
+      products: products ?? []
     })
   }
 
