@@ -1,5 +1,4 @@
-import { ValueObject } from 'src/modules/core/domain/valueObject'
-
+import { ValueObject } from './value-object.vo'
 export class EmailVO extends ValueObject {
   private readonly email: string
   constructor(data: string) {

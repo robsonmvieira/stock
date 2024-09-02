@@ -1,7 +1,7 @@
 import { Entity } from 'src/modules/core/domain/entities/entity'
-import { ValueObject } from 'src/modules/core/domain/valueObject'
+import { EmailVO, ValueObject } from 'src/modules/core/domain/valueObject'
 import { EmployeeId } from '../valueObjects/employee.uuid'
-import { EmailVO } from '../valueObjects/email.vo'
+
 import { CPFVO } from '../valueObjects/cpf.vo'
 import { EmployeeFakeBuilder } from '../tests/employee.fake-builder'
 import { DepartamentsEnum } from '../enums/departaments.enum'
@@ -139,6 +139,15 @@ export class Employee extends Entity {
     this.emailIsValid()
   }
 
+  emailIsValid(): boolean {
+    if (!this.email.isValid()) {
+      this.addErrorOnContainer('E-Mail inválido', 'email')
+      return false
+    }
+
+    return true
+  }
+
   changeUserPassword(password: string) {
     this.userChangePassword = true
     this.initialPassword = null
@@ -148,15 +157,6 @@ export class Employee extends Entity {
 
   static fake() {
     return EmployeeFakeBuilder
-  }
-
-  emailIsValid(): boolean {
-    if (!this.email.isValid()) {
-      this.addErrorOnContainer('E-Mail inválido', 'email')
-      return false
-    }
-
-    return true
   }
 
   updateEmail(email: string) {
@@ -182,10 +182,6 @@ export class Employee extends Entity {
     }
     this.document = newDocument
     this.validate()
-  }
-
-  private addErrorOnContainer(key: string, value: string): void {
-    this.notification.addError(value, key)
   }
 
   get entity_id(): ValueObject {

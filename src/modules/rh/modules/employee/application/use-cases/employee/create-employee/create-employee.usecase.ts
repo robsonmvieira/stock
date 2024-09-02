@@ -15,7 +15,7 @@ export class CreateEmployeeUseCase {
   @Inject('IEncryptPort')
   private hash: IEncryptPort
 
-  async execute(command: CreateEmployeeDto) {
+  async execute(command: CreateEmployeeDto): Promise<ModelOutput> {
     const validate = CreateEmployeeDtoPropsValidator.validate(command)
     if (Object.keys(validate).length !== 0) {
       return new ModelOutput({
