@@ -4,4 +4,9 @@ import { IProductRepository } from '../domain/repositories'
 
 export class ProductTypeORMRepository
   extends BaseRepository<ProductModel>
-  implements IProductRepository {}
+  implements IProductRepository
+{
+  async findByName(name: string): Promise<ProductModel | undefined> {
+    return await this.repo.findOne({ where: { name } })
+  }
+}
