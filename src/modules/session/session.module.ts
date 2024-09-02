@@ -3,13 +3,17 @@ import { SessionController } from './application/controllers/session.controller'
 import { LoginUseCase } from './application/usecases/login/login.usecase'
 import { ConfigModule } from '@modules/config/config.module'
 import { JwtService } from './application/services/jwt.service'
-import { EmployeeModule } from '@modules/employee/employee.module'
-import { IEmployeeRepository } from '@modules/employee/domain/repositories'
+
 import { IEncryptPort } from '@modules/encrypt/domain/repositories/encrypt.port'
 import { EncryptModule } from '@modules/encrypt/encrypt.module'
+import { EmailModule } from '@modules/email/email.module'
+
+import { WelcomeQueueHandlerPublisher } from '@modules/email/handlers/welcome-handler/welcome-handler.service'
+import { IEmployeeRepository } from '@modules/rh/modules/employee/domain/repositories'
+import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
 
 @Module({
-  imports: [ConfigModule, EmployeeModule, EncryptModule],
+  imports: [ConfigModule, EmployeeModule, EncryptModule, EmailModule],
   controllers: [SessionController],
   providers: [
     JwtService,
@@ -18,9 +22,21 @@ import { EncryptModule } from '@modules/encrypt/encrypt.module'
       useFactory: (
         JwtService: JwtService,
         encryptPort: IEncryptPort,
-        employeeRepository: IEmployeeRepository
-      ) => new LoginUseCase(encryptPort, JwtService, employeeRepository),
-      inject: [JwtService, 'IEncryptPort', 'IEmployeeRepository']
+        employeeRepository: IEmployeeRepository,
+        welcomeQueueHandlerPublisher: WelcomeQueueHandlerPublisher
+      ) =>
+        new LoginUseCase(
+          encryptPort,
+          JwtService,
+          employeeRepository,
+          welcomeQueueHandlerPublisher
+        ),
+      inject: [
+        JwtService,
+        'IEncryptPort',
+        'IEmployeeRepository',
+        WelcomeQueueHandlerPublisher
+      ]
     }
   ],
   exports: [JwtService]

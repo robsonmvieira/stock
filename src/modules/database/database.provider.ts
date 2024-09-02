@@ -51,7 +51,7 @@ export class DatabaseProvider {
       database: this.configService.get<string>('DB_DATABASE'),
       entities,
       synchronize: this.configService.get<string>('NODE_ENV') !== 'production',
-      logging: this.configService.get<string>('NODE_ENV') === 'development',
+      // logging: this.configService.get<string>('NODE_ENV') === 'development',
       migrations: [path.join(__dirname, 'migrations', '*{.ts,.js}')]
     })
   }

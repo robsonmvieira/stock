@@ -28,4 +28,8 @@ export abstract class Entity {
   }
   abstract get entity_id(): ValueObject
   abstract toJSON(): any
+
+  protected addErrorOnContainer(key: string, value: string): void {
+    this.notification.addError(value, key)
+  }
 }
