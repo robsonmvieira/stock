@@ -5,6 +5,7 @@ import {
 } from './application/controllers'
 import {
   CreateCategoryUseCase,
+  CreateProductUseCase,
   ListCategoryUseCase
 } from './application/use-cases'
 import { DatabaseModule } from '@modules/database/database.module'
@@ -18,6 +19,7 @@ import { CategoryModel } from './domain/models'
   providers: [
     CreateCategoryUseCase,
     ListCategoryUseCase,
+    CreateProductUseCase,
     {
       provide: 'ICategoryRepository',
       useFactory: (data: DataSource) =>
