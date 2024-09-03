@@ -45,8 +45,7 @@ export class CreateProductUseCase {
     }
 
     const productModelToSave = ProductMapper.fromEntityToModel(product)
-
-    await this.repo.save(productModelToSave)
+    console.log(productModelToSave)
 
     return new ModelOutput({
       hasError: false,

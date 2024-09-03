@@ -9,6 +9,7 @@ import {
   IsUUID
 } from 'class-validator'
 import { CreateProductDtoProps } from '.'
+import { ProductStatus } from '@modules/logistic/modules/product/domain/enum/product-status.enum'
 
 export class CreateProductDto {
   @ApiProperty({ description: 'Name of category' })
@@ -22,21 +23,21 @@ export class CreateProductDto {
   description: string
 
   @ApiProperty({ description: 'Price of product' })
-  @IsNumber()
-  price: number
+  @IsString()
+  price: string
 
   @ApiProperty({ description: 'Stock quantity of product' })
   @IsNumber()
   stockQuantity: number
 
   @ApiProperty({ description: 'Unit price of product' })
-  @IsNumber()
-  unitPrice: number
+  @IsString()
+  unitPrice: string
 
   @ApiProperty({ description: 'Total Value already purchased product' })
   @IsOptional()
   @IsNumber()
-  totalAmount: number
+  totalAmount: string
 
   @ApiProperty({
     description: 'Total Quantity  already purchased product'
@@ -53,10 +54,14 @@ export class CreateProductDto {
   @IsOptional()
   images: string[]
 
-  @ApiProperty({ description: 'Status of product' })
+  @ApiProperty({
+    enum: ProductStatus,
+    enumName: 'ProductStatus',
+    description: 'Status of product'
+  })
   @IsOptional()
   @IsString()
-  status: string
+  status: ProductStatus
 
   @ApiProperty({ description: 'Id of supplier' })
   @IsNotEmpty()

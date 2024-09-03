@@ -30,7 +30,7 @@ export class ProductMapper {
       supplierId: entity.supplierId,
       sku: entity.sku,
       images: entity.images,
-      QuantityPurchased: entity.QuantityPurchased,
+      QuantityPurchased: entity.quantityPurchased,
       unitPrice: entity.unitPrice,
       totalAmount: entity.totalAmount,
       status: entity.status,

@@ -3,14 +3,14 @@ import { Column, Entity } from 'typeorm'
 export type ProductModelProps = {
   name: string
   description: string
-  price: number
+  price: string
   stockQuantity: number
   supplierId: string
   sku: string
   images: string[]
   QuantityPurchased: number
-  unitPrice: number
-  totalAmount: number
+  unitPrice: string
+  totalAmount: string
   status: string // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'
   categoryId: string
 
@@ -37,7 +37,7 @@ export class ProductModel extends Model {
   description: string
 
   @Column()
-  price: number
+  price: string
 
   @Column()
   stockQuantity: number
@@ -52,10 +52,10 @@ export class ProductModel extends Model {
   QuantityPurchased: number
 
   @Column()
-  unitPrice: number
+  unitPrice: string
 
   @Column()
-  totalAmount: number
+  totalAmount: string
 
   @Column()
   status: string // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'

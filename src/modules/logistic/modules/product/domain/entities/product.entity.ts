@@ -6,14 +6,14 @@ import { ProductStatus } from '../enum/product-status.enum'
 type CreateProductCommand = {
   name: string
   description: string
-  price: number
+  price: string
   stockQuantity: number
   supplierId: string
   sku: string
   images: string[]
   QuantityPurchased: number
-  unitPrice: number
-  totalAmount: number
+  unitPrice: string
+  totalAmount: string
   status: ProductStatus // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'
   categoryId: string
 }
@@ -21,14 +21,14 @@ type CreateProductCommand = {
 type ProductProps = {
   name: string
   description: string
-  price: number
+  price: string
   stockQuantity: number
   supplierId: string
   sku: string
   images: string[]
   QuantityPurchased?: number
-  unitPrice: number
-  totalAmount?: number
+  unitPrice: string
+  totalAmount?: string
   status: ProductStatus // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'
   categoryId: string
 
@@ -43,14 +43,15 @@ type ProductProps = {
 export class Product extends Entity {
   private _name: string
   private _description: string
-  private _price: number
+  private _price: string
   private _stockQuantity: number
   private _supplierId: string
   private _sku: string
   private _images: string[]
-  private _QuantityPurchased?: number
-  private _unitPrice: number
-  private _totalAmount?: number
+  private _quantityPurchased?: number
+  private _unitPrice: string
+  // final value after purchase in every sales
+  private _totalAmount?: string
   private _status: ProductStatus // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'
   private _categoryId: string
 
@@ -82,9 +83,9 @@ export class Product extends Entity {
     this._supplierId = supplierId
     this._sku = sku
     this._images = images
-    this._QuantityPurchased = QuantityPurchased ?? 0
+    this._quantityPurchased = QuantityPurchased ?? 0
     this._unitPrice = unitPrice
-    this._totalAmount = totalAmount ?? 0
+    this._totalAmount = totalAmount ?? '0'
     this._status = status
     this._categoryId = categoryId
   }
@@ -112,52 +113,53 @@ export class Product extends Entity {
   }
 
   get name(): string {
-    return this.name
+    return this._name
   }
 
   get description(): string {
-    return this.description
+    return this._description
   }
 
-  get price(): number {
-    return this.price
+  get price(): string {
+    return this._price
   }
 
   get stockQuantity(): number {
-    return this.stockQuantity
+    return this._stockQuantity
   }
 
   get supplierId(): string {
-    return this.supplierId
+    return this._supplierId
   }
 
   get sku(): string {
-    return this.sku
+    return this._sku
   }
 
   get images(): string[] {
-    return this.images
+    return this._images
   }
 
-  get QuantityPurchased(): number {
-    return this.QuantityPurchased
+  get quantityPurchased(): number {
+    return this._quantityPurchased
   }
 
-  get unitPrice(): number {
-    return this.unitPrice
+  get unitPrice(): string {
+    return this._unitPrice
   }
 
-  get totalAmount(): number {
-    return this.totalAmount
+  get totalAmount(): string {
+    return this._totalAmount
   }
 
   get status(): ProductStatus {
-    return this.status
+    return this._status
   }
 
   get categoryId(): string {
-    return this.categoryId
+    return this._categoryId
   }
+
   toJSON() {
     return {
       id: this.id,
@@ -168,11 +170,17 @@ export class Product extends Entity {
       supplierId: this.supplierId,
       sku: this.sku,
       images: this.images,
-      QuantityPurchased: this.QuantityPurchased,
+      QuantityPurchased: this.quantityPurchased,
       unitPrice: this.unitPrice,
       totalAmount: this.totalAmount,
       status: this.status,
-      categoryId: this.categoryId
+      categoryId: this.categoryId,
+
+      created_at: this.created_at,
+      updated_at: this.updated_at,
+      deleted_at: this.deleted_at,
+      is_deleted: this.is_deleted,
+      is_blocked: this.is_blocked
     }
   }
 }
