@@ -27,7 +27,12 @@ export class CreateProductUseCase {
   @Inject('IStorage')
   private fileService: IStorage
   async execute(createProductCommand: CreateProductDtoProps, file: Buffer) {
-    await this.fileService.createObject(createProductCommand.name, file)
+    const bucketFolder = 'product'
+    await this.fileService.createObject(
+      bucketFolder,
+      createProductCommand.name,
+      file
+    )
 
     const validate =
       CreateProductDtoPropsValidator.validate(createProductCommand)
