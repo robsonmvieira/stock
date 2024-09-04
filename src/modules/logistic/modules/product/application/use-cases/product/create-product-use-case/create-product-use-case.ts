@@ -7,7 +7,7 @@ import {
 import { Inject, Injectable } from '@nestjs/common'
 import { CreateProductDtoProps, CreateProductDtoPropsValidator } from './dto'
 import { ProductMapper } from '../../../mappers'
-import { IUnitOfWork } from '@modules/core/domain/repositories'
+import { IStorage, IUnitOfWork } from '@modules/core/domain/repositories'
 import { ISupplierRepository } from '@modules/logistic/modules/supplier/domain/repositories'
 
 @Injectable()
@@ -23,7 +23,12 @@ export class CreateProductUseCase {
 
   @Inject('IUnitOfWork')
   private uow: IUnitOfWork
-  async execute(createProductCommand: CreateProductDtoProps) {
+
+  @Inject('IStorage')
+  private fileService: IStorage
+  async execute(createProductCommand: CreateProductDtoProps, file: Buffer) {
+    await this.fileService.createObject(createProductCommand.name, file)
+
     const validate =
       CreateProductDtoPropsValidator.validate(createProductCommand)
     if (Object.keys(validate).length !== 0) {
