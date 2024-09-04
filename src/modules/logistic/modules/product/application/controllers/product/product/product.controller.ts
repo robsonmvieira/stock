@@ -48,7 +48,7 @@ export class ProductController {
     @Res() response: Response,
     @UploadedFile() file: Express.Multer.File
   ) {
-    // console.log(file.fieldname, file.originalname, file.encoding, file.mimetype)
+    console.log(file.fieldname, file.originalname, file.encoding, file.mimetype)
     console.log(dto)
     return response.status(201).json({ data: 'ok' })
   }
