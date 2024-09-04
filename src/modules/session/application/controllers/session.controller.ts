@@ -3,6 +3,9 @@ import { LoginDto } from '../usecases/login/dto/login.dto'
 import { LoginUseCase } from '../usecases/login/login.usecase'
 import { Response } from 'express'
 import { Public } from '@modules/shared/is-public-decorator'
+import { ApiTags } from '@nestjs/swagger'
+
+@ApiTags('Auth')
 @Controller('login')
 export class SessionController {
   @Inject() private loginUseCase: LoginUseCase

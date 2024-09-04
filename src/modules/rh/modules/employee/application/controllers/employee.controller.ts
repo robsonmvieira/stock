@@ -18,7 +18,9 @@ import {
 import { Response, Request } from 'express'
 import { defer, Observable, of } from 'rxjs'
 import { map, repeat } from 'rxjs/operators'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Employee')
 @Controller('employee')
 export class EmployeeController {
   @Inject() private createEmployeeUseCase: CreateEmployeeUseCase

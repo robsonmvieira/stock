@@ -36,7 +36,7 @@ export class CreateProductDto {
 
   @ApiProperty({ description: 'Total Value already purchased product' })
   @IsOptional()
-  @IsNumber()
+  @IsString()
   totalAmount: string
 
   @ApiProperty({
