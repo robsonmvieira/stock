@@ -2,6 +2,8 @@ import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common'
 import { CreateSupplierUseCase, ListSupplierUseCase } from '../../use-cases'
 import { CreateSupplierDto } from '../../use-cases/create-supplier-use-case/dto'
 import { Response } from 'express'
+import { ApiTags } from '@nestjs/swagger'
+@ApiTags('Supplier')
 @Controller('suppliers')
 export class SupplierController {
   @Inject() private readonly createSupplierUseCase: CreateSupplierUseCase
