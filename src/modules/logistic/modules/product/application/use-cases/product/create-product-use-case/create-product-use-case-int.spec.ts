@@ -4,17 +4,16 @@ import {
   ICategoryRepository,
   IProductRepository
 } from '@modules/logistic/modules/product/domain/repositories'
-import { IUnitOfWork } from '@modules/core/domain/repositories'
+import { IStorage, IUnitOfWork } from '@modules/core/domain/repositories'
 import { ISupplierRepository } from '@modules/logistic/modules/supplier/domain/repositories'
 
 describe('CreateProductUseCase', () => {
   let service: CreateProductUseCase
   let repo: IProductRepository
   let supplierRepo: ISupplierRepository
-
   let categoryRepo: ICategoryRepository
-
   let uow: IUnitOfWork
+  let fileService: IStorage
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -43,6 +42,12 @@ describe('CreateProductUseCase', () => {
           useValue: {
             commit: jest.fn()
           }
+        },
+        {
+          provide: 'IStorage',
+          useValue: {
+            createObject: jest.fn()
+          }
         }
       ]
     }).compile()
@@ -52,6 +57,7 @@ describe('CreateProductUseCase', () => {
     categoryRepo = module.get<ICategoryRepository>('ICategoryRepository')
     supplierRepo = module.get<ISupplierRepository>('ISupplierRepository')
     uow = module.get<IUnitOfWork>('IUnitOfWork')
+    fileService = module.get<IStorage>('IStorage')
   })
 
   it('should be defined', () => {
@@ -60,5 +66,6 @@ describe('CreateProductUseCase', () => {
     expect(categoryRepo).toBeDefined()
     expect(supplierRepo).toBeDefined()
     expect(uow).toBeDefined()
+    expect(fileService).toBeDefined()
   })
 })

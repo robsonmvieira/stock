@@ -18,38 +18,36 @@ export class ProductController {
   @Inject() private readonly createProductUseCase: CreateProductUseCase
 
   @Post()
-  async create(@Res() response: Response, @Body() dto: CreateProductDto) {
-    const data = await this.createProductUseCase.execute(dto)
-
-    if (data.hasError) {
-      return response.status(400).json(data)
-    }
-    return response.status(201).json(data)
-  }
-
-  @Post('upload')
+  @UseInterceptors(FileInterceptor('images'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
       type: 'object',
       properties: {
-        comment: { type: 'string' },
-        outletId: { type: 'integer' },
-        file: {
-          type: 'string',
-          format: 'binary'
-        }
+        name: { type: 'string' },
+        description: { type: 'string' },
+        stockQuantity: { type: 'integer' },
+        unitPrice: { type: 'string' },
+        totalAmount: { type: 'string' },
+        QuantityPurchased: { type: 'integer' },
+        images: { type: 'array', items: { type: 'string', format: 'binary' } },
+        status: { type: 'string' },
+        supplierId: { type: 'string' },
+        sku: { type: 'string' },
+        categoryId: { type: 'string' }
       }
     }
   })
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(
-    @Body() dto: any,
+  async create(
     @Res() response: Response,
+    @Body() dto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-    console.log(file.fieldname, file.originalname, file.encoding, file.mimetype)
-    console.log(dto)
-    return response.status(201).json({ data: 'ok' })
+    const data = await this.createProductUseCase.execute(dto, file.buffer)
+
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+    return response.status(201).json(data)
   }
 }
