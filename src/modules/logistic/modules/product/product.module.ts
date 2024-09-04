@@ -15,9 +15,11 @@ import {
   ProductTypeORMRepository,
   CategoryTypeORMRepository
 } from './repositories'
+import { SharedModule } from '@modules/shared/shared.module'
+import { SupplierModule } from '../supplier/supplier.module'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, SharedModule, SupplierModule],
   controllers: [CategoryController, ProductController],
   providers: [
     CreateCategoryUseCase,
