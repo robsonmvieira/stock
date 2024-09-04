@@ -31,24 +31,6 @@ export class UnitOfWorkTypeORM implements IUnitOfWork {
     return this.transaction
   }
 
-  // async do<T>(fn: (uow: IUnitOfWork) => Promise<T>): Promise<T> {
-  //   try {
-  //     if (this.transaction) {
-  //       const returnValue = await fn(this)
-  //       this.transaction = null
-  //       return returnValue
-  //     }
-
-  //     return await fn(this)
-  //   } catch (e) {
-  //     if (this.transaction) {
-  //       await this.transaction?.rollbackTransaction()
-  //       this.transaction = null
-  //     }
-  //     throw e
-  //   }
-  // }
-
   async do<T>(fn: (uow: IUnitOfWork) => Promise<T>): Promise<T> {
     await this.start()
     try {
