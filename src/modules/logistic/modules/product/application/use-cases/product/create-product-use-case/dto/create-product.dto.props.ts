@@ -1,16 +1,15 @@
 import { ProductStatus } from '@modules/logistic/modules/product/domain/enum/product-status.enum'
 
 export type CreateProductDtoProps = {
+  // basic information
   name: string
-  description: string
-  price: string
-  stockQuantity: number
-  supplierId: string
-  sku: string
-  images: string[]
-  QuantityPurchased: number
-  unitPrice: string
-  totalAmount: string
-  status: ProductStatus // 'active' | 'inactive' | 'deleted' | 'blocked' | 'onHold'
+  price: number
+  details?: string
+  images?: string[]
+  invoiceNumber: string
   categoryId: string
+  supplierId: string
+  description: string
+  status: ProductStatus
+  stockQuantity: number
 }

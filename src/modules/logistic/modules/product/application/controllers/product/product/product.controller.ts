@@ -25,15 +25,14 @@ export class ProductController {
       type: 'object',
       properties: {
         name: { type: 'string' },
+        invoiceNumber: { type: 'string' },
+        price: { type: 'integer' },
         description: { type: 'string' },
+        details: { type: 'string' },
         stockQuantity: { type: 'integer' },
-        unitPrice: { type: 'string' },
-        totalAmount: { type: 'string' },
-        QuantityPurchased: { type: 'integer' },
         images: { type: 'array', items: { type: 'string', format: 'binary' } },
         status: { type: 'string' },
         supplierId: { type: 'string' },
-        sku: { type: 'string' },
         categoryId: { type: 'string' }
       }
     }
