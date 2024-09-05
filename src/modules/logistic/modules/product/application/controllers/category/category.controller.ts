@@ -4,8 +4,11 @@ import {
   ListCategoryUseCase,
   CreateCategoryDto
 } from '../../use-cases'
-import { Response } from 'express'
 
+import { Response } from 'express'
+import { ApiTags } from '@nestjs/swagger'
+
+@ApiTags('Category')
 @Controller('category')
 export class CategoryController {
   @Inject() private readonly createCategoryUseCase: CreateCategoryUseCase

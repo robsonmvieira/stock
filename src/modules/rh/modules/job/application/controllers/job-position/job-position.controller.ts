@@ -5,6 +5,9 @@ import {
 } from '../../use-cases/job-position'
 import { Response, Request } from 'express'
 import { CreateJobPositionDto } from '../../use-cases/job-position/create-job-position-use-case/dto/create-job-position.props'
+import { ApiTags } from '@nestjs/swagger'
+
+@ApiTags('Job Position')
 @Controller('job-position')
 export class JobPositionController {
   @Inject() private listJobPositionUseCase: ListJobPositionUseCase
