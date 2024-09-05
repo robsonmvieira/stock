@@ -12,42 +12,35 @@ import { CreateProductDtoProps } from '.'
 import { ProductStatus } from '@modules/logistic/modules/product/domain/enum/product-status.enum'
 
 export class CreateProductDto {
-  @ApiProperty({ description: 'Name of category' })
+  @ApiProperty({ description: 'Name of product' })
   @IsNotEmpty()
   @IsString()
   name: string
 
-  @ApiProperty({ description: 'Description of category' })
+  @ApiProperty({ description: 'Price of product' })
+  @IsString()
+  price: number
+
+  @ApiProperty({ description: 'Description of product' })
   @IsOptional()
   @IsString()
   description: string
 
-  @ApiProperty({ description: 'Price of product' })
+  @ApiProperty({ description: 'Tech details of product' })
+  @IsOptional()
   @IsString()
-  price: string
+  details: string
 
   @ApiProperty({ description: 'Stock quantity of product' })
   @IsNumber()
   stockQuantity: number
 
-  @ApiProperty({ description: 'Unit price of product' })
+  @ApiProperty({ description: 'Invoice Number of product' })
   @IsString()
-  unitPrice: string
-
-  @ApiProperty({ description: 'Total Value already purchased product' })
-  @IsOptional()
-  @IsString()
-  totalAmount: string
+  invoiceNumber: string
 
   @ApiProperty({
-    description: 'Total Quantity  already purchased product'
-  })
-  @IsOptional()
-  @IsNumber()
-  QuantityPurchased: number
-
-  @ApiProperty({
-    description: 'list of products Id '
+    description: 'Image of product'
   })
   @IsArray()
   @IsString({ each: true })
@@ -67,11 +60,6 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsUUID()
   supplierId: string
-
-  @ApiProperty({ description: 'sku of product' })
-  @IsNotEmpty()
-  @IsUUID()
-  sku: string
 
   @ApiProperty({ description: 'Id of category' })
   @IsNotEmpty()
