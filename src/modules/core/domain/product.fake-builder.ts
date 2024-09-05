@@ -2,7 +2,8 @@ import { ProductId } from '@modules/logistic/modules/product/domain/valueObject'
 import { Chance } from 'chance'
 type PropertyOrFactory<T> = T | ((index: number) => T)
 
-export class ProductFakeBuilder<TBuild = any> {
+// export class ProductFakeBuilder<TBuild = any> {
+export class ProductFakeBuilder {
   private countsObjs: number
   private chance: Chance.Chance
 
