@@ -1,7 +1,8 @@
-import { Entity } from '@modules/core/domain/entities'
+import { AggregateRoot } from '@modules/core/domain/entities'
 import { ValueObject } from '@modules/core/domain/valueObject'
 import { ProductId } from '../valueObject'
 import { ProductStatus } from '../enum/product-status.enum'
+import { NewProductCreatedEvent, ProductBlockedEvent } from '../events'
 
 type CreateProductCommand = {
   // basic information
@@ -55,7 +56,7 @@ type ProductProps = {
   is_blocked?: boolean
 }
 
-export class Product extends Entity {
+export class Product extends AggregateRoot {
   private _name: string
   private _invoiceNumber: string
   private _description: string
@@ -130,6 +131,9 @@ export class Product extends Entity {
     this._complaintsCount = complaintsCount
     this._minimalInStockQuantityPermited = minimalInStockQuantityPermited ?? 10
     this._invoiceNumber = invoiceNumber
+
+    this.registerHandlers(Product.name, this.productCreated.bind(this))
+    this.registerHandlers(Product.name, this.blockProduct.bind(this))
   }
 
   static create(command: CreateProductCommand) {
@@ -156,6 +160,26 @@ export class Product extends Entity {
       complaintsCount: 0
     })
     return product
+  }
+
+  productCreated(userLoggedId: string): void {
+    this.applyEvent(
+      new NewProductCreatedEvent(this.id, Product.name, 1, userLoggedId, {
+        id: this.id.toString(),
+        name: this._name,
+        createdAt: new Date()
+        // demais campos
+      })
+    )
+  }
+
+  blockProduct(userLoggedId: string): void {
+    this.is_blocked = true
+    this.applyEvent(
+      new ProductBlockedEvent(this.id, Product.name, 1, userLoggedId, {
+        id: this.id.toString()
+      })
+    )
   }
 
   // Method to update stock quantity
