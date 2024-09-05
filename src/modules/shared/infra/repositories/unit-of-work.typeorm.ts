@@ -1,10 +1,11 @@
+import { AggregateRoot } from '@modules/core/domain/entities'
 import { IUnitOfWork } from '@modules/core/domain/repositories'
 import { DataSource, QueryRunner } from 'typeorm'
 
 export class UnitOfWorkTypeORM implements IUnitOfWork {
   private transaction: QueryRunner | null
+  private aggregates: Set<AggregateRoot> = new Set<AggregateRoot>()
   constructor(private readonly manager: DataSource) {}
-
   async start(): Promise<void> {
     if (this.transaction && this.transaction.isTransactionActive) {
       throw new Error('Transaction already started')
@@ -56,5 +57,12 @@ export class UnitOfWorkTypeORM implements IUnitOfWork {
       await this.transaction.release()
       this.transaction = null
     }
+  }
+
+  addAggregate(aggregate: AggregateRoot): void {
+    this.aggregates.add(aggregate)
+  }
+  getAggregates(): AggregateRoot[] {
+    return Array.from(this.aggregates)
   }
 }
