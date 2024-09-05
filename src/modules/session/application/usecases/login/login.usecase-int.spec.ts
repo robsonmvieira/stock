@@ -2,8 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { ConfigModule } from '@nestjs/config'
 import { LoginUseCase } from './login.usecase'
 import { JwtService } from '../../services/jwt.service'
-import { IEmployeeRepository } from '@modules/employee/domain/repositories'
+
 import { IEncryptPort } from '@modules/encrypt/domain/repositories/encrypt.port'
+import { IEmployeeRepository } from '@modules/rh/modules/employee/domain/repositories'
+import { WelcomeQueueHandlerPublisher } from '@modules/email/handlers/welcome-handler/welcome-handler.service'
 
 describe('LoginUseCase Integration Test', () => {
   let useCase: LoginUseCase
@@ -34,12 +36,25 @@ describe('LoginUseCase Integration Test', () => {
           }
         },
         {
+          provide: WelcomeQueueHandlerPublisher,
+          useValue: {
+            publish: jest.fn()
+          }
+        },
+        {
           provide: LoginUseCase,
           useFactory: (
             jwtService: JwtService,
             encryptPort: IEncryptPort,
-            employeeRepository: IEmployeeRepository
-          ) => new LoginUseCase(encryptPort, jwtService, employeeRepository),
+            employeeRepository: IEmployeeRepository,
+            welcomeQueueHandlerPublisher: WelcomeQueueHandlerPublisher
+          ) =>
+            new LoginUseCase(
+              encryptPort,
+              jwtService,
+              employeeRepository,
+              welcomeQueueHandlerPublisher
+            ),
           inject: [JwtService, 'IEncryptPort', 'IEmployeeRepository']
         }
       ]

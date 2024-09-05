@@ -38,6 +38,7 @@
     "bullmq": "^5.12.10",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
+    "eventemitter2": "^6.4.9",
     "ioredis": "^5.4.1",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
