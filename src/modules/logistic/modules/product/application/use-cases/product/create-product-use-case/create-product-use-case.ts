@@ -26,6 +26,9 @@ export class CreateProductUseCase {
 
   @Inject('IStorage')
   private fileService: IStorage
+
+  // @Inject(DomainEventMediator)
+  // private eventMediator: DomainEventMediator
   async execute(createProductCommand: CreateProductDtoProps, file: Buffer) {
     const bucketFolder = 'product'
     await this.fileService.createObject(
@@ -71,8 +74,6 @@ export class CreateProductUseCase {
     const productModelToSave = ProductMapper.fromEntityToModel(product)
 
     await this.uow.do(async () => {
-      // await this.repo.save(productModelToSave)
-      console.log('dentro da transaction')
       const supplier = await this.supplierRepo.findById(
         createProductCommand.supplierId
       )
@@ -106,6 +107,10 @@ export class CreateProductUseCase {
       await this.repo.save(productModelToSave)
       await this.categoryRepo.save(categoryExists)
       await this.supplierRepo.save(supplier)
+      this.uow.addAggregate(product)
+      // this.uow.getAggregates().forEach(aggregate => {
+      //   this.eventMediator.publish(aggregate)
+      // })
     })
 
     return new ModelOutput({
@@ -115,6 +120,3 @@ export class CreateProductUseCase {
     })
   }
 }
-
-//supplierId: c046fd2d-da95-469c-8158-eeeb66e201c4
-// categoryId: d6100d8f-b067-40b1-b832-b2115555352a

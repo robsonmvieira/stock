@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, Scope } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 import { UnitOfWorkTypeORM } from './infra/repositories'
 import { DatabaseModule } from '@modules/database/database.module'
@@ -11,7 +11,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
     {
       provide: 'IUnitOfWork',
       useFactory: (data: DataSource) => new UnitOfWorkTypeORM(data),
-      inject: ['dbConnectionTypeOrm']
+      inject: ['dbConnectionTypeOrm'],
+      scope: Scope.REQUEST
     },
     {
       provide: 'IStorage',

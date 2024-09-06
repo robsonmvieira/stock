@@ -1,13 +1,15 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
+  Param,
   Post,
   Res,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
-import { CreateProductUseCase } from '../../../use-cases'
+import { BlockProductUseCase, CreateProductUseCase } from '../../../use-cases'
 import { Response } from 'express'
 import { CreateProductDto } from '../../../use-cases/product/create-product-use-case/dto'
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
@@ -16,6 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 @Controller('product')
 export class ProductController {
   @Inject() private readonly createProductUseCase: CreateProductUseCase
+  @Inject() private readonly blockeProductUseCase: BlockProductUseCase
 
   @Post()
   @UseInterceptors(FileInterceptor('images'))
@@ -48,5 +51,15 @@ export class ProductController {
       return response.status(400).json(data)
     }
     return response.status(201).json(data)
+  }
+
+  @Get('block-product/:id')
+  async blockeProduct(@Res() response: Response, @Param('id') id: string) {
+    const data = await this.blockeProductUseCase.execute(id)
+
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+    return response.status(200).json(data)
   }
 }
