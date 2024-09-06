@@ -9,7 +9,6 @@ import { CreateProductDtoProps, CreateProductDtoPropsValidator } from './dto'
 import { ProductMapper } from '../../../mappers'
 import { IStorage, IUnitOfWork } from '@modules/core/domain/repositories'
 import { ISupplierRepository } from '@modules/logistic/modules/supplier/domain/repositories'
-import { DomainEventMediator } from '@modules/shared/domain/events/domain-event.mediator'
 
 @Injectable()
 export class CreateProductUseCase {
@@ -28,8 +27,8 @@ export class CreateProductUseCase {
   @Inject('IStorage')
   private fileService: IStorage
 
-  @Inject(DomainEventMediator)
-  private eventMediator: DomainEventMediator
+  // @Inject(DomainEventMediator)
+  // private eventMediator: DomainEventMediator
   async execute(createProductCommand: CreateProductDtoProps, file: Buffer) {
     const bucketFolder = 'product'
     await this.fileService.createObject(
@@ -109,9 +108,9 @@ export class CreateProductUseCase {
       await this.categoryRepo.save(categoryExists)
       await this.supplierRepo.save(supplier)
       this.uow.addAggregate(product)
-      this.uow.getAggregates().forEach(aggregate => {
-        this.eventMediator.publish(aggregate)
-      })
+      // this.uow.getAggregates().forEach(aggregate => {
+      //   this.eventMediator.publish(aggregate)
+      // })
     })
 
     return new ModelOutput({

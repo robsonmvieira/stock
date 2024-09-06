@@ -3,6 +3,7 @@ import { ValueObject } from '@modules/core/domain/valueObject'
 import { ProductId } from '../valueObject'
 import { ProductStatus } from '../enum/product-status.enum'
 import { NewProductCreatedEvent, ProductBlockedEvent } from '../events'
+import { ProductFakeBuilder } from '../tests'
 
 type CreateProductCommand = {
   // basic information
@@ -171,6 +172,10 @@ export class Product extends AggregateRoot {
         // demais campos
       })
     )
+  }
+
+  static fake() {
+    return ProductFakeBuilder
   }
 
   blockProduct(userLoggedId: string): void {
