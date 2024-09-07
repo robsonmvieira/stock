@@ -1,4 +1,3 @@
-import { ProductModule } from '@modules/logistic/modules/product/product.module'
 import { Module } from '@nestjs/common'
 import { GenerateDumbDataService } from './generate-dumb-data-service/generate-dumb-data.service'
 import { DumbDataController } from './dumb-data-controller/dumb-data-controller.controller'
