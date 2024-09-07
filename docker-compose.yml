@@ -42,5 +42,15 @@ services:
     environment:
       - REDIS_PASSWORD=redisDev123
 
+  rabbitmq:
+    platform: linux/arm/v7
+    image: rabbitmq:3.9.11-management
+    container_name: rabbitmq-stock
+    ports:
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+
 volumes:
   redis-data:
