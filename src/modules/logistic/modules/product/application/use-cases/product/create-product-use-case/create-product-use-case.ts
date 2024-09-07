@@ -29,7 +29,10 @@ export class CreateProductUseCase {
 
   // @Inject(DomainEventMediator)
   // private eventMediator: DomainEventMediator
-  async execute(createProductCommand: CreateProductDtoProps, file: Buffer) {
+  async execute(
+    createProductCommand: CreateProductDtoProps,
+    file: Buffer
+  ): Promise<ModelOutput> {
     const bucketFolder = 'product'
     await this.fileService.createObject(
       bucketFolder,
