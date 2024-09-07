@@ -72,16 +72,19 @@ export class BlockProductUseCase {
     const productEntity = ProductMapper.fromModelToEntity(p)
 
     productEntity.blockProduct('loggedUserId')
-    // product = ProductMapper.fromEntityToModel(productEntity)
 
     productEntity.blockProduct('loggedUserId')
+    this.uow.addAggregate(productEntity)
     await this.uow.do(async () => {
-      // await this.repo.update(product.id, product)
-      this.uow.addAggregate(productEntity)
-      this.uow.getAggregates().forEach(aggregate => {
-        this.eventMediator.publish(aggregate)
-      })
+      const aggregates = this.uow.getAggregates()
+      for (const aggregate of aggregates) {
+        await this.eventMediator.publish(aggregate)
+      }
     })
+    const aggregates = this.uow.getAggregates()
+    for (const aggregate of aggregates) {
+      await this.eventMediator.publishIntegrationEvents(aggregate)
+    }
 
     return new ModelOutput({ hasError: false, data: null, error: null })
   }
