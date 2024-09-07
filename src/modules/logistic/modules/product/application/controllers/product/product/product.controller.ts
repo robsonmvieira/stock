@@ -12,6 +12,7 @@ import {
 import {
   BlockProductUseCase,
   CreateProductUseCase,
+  GetProductByIdUseCase,
   ListProductUseCase
 } from '../../../use-cases'
 import { Response } from 'express'
@@ -24,6 +25,7 @@ export class ProductController {
   @Inject() private readonly createProductUseCase: CreateProductUseCase
   @Inject() private readonly blockeProductUseCase: BlockProductUseCase
   @Inject() private readonly listProductUseCase: ListProductUseCase
+  @Inject() private readonly getByIdProductUseCase: GetProductByIdUseCase
 
   @Post()
   @UseInterceptors(FileInterceptor('images'))
@@ -61,6 +63,16 @@ export class ProductController {
   @Get()
   async list(@Res() response: Response) {
     const data = await this.listProductUseCase.execute()
+    return response.status(200).json(data)
+  }
+
+  @Get(':id')
+  async getById(@Res() response: Response, @Param('id') id: string) {
+    const data = await this.getByIdProductUseCase.execute(id)
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+
     return response.status(200).json(data)
   }
 
