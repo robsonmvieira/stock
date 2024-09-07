@@ -54,6 +54,11 @@ export class ProductMapper {
   static fromEntityToModel(entity: Product): ProductModel {
     return new ProductModel({
       id: entity.id.id,
+      created_at: entity.created_at,
+      updated_at: entity.updated_at,
+      deleted_at: entity.deleted_at,
+      is_deleted: entity.is_deleted,
+      is_blocked: entity.is_blocked,
       name: entity.name,
       description: entity.description,
       price: entity.price,
