@@ -2,7 +2,8 @@ import { DataSource } from 'typeorm'
 import { ProductBlockedInQueueHandler } from '../../application/handlers'
 import {
   BlockProductUseCase,
-  CreateProductUseCase
+  CreateProductUseCase,
+  ListProductUseCase
 } from '../../application/use-cases'
 import { ProductTypeORMRepository } from '../repositories'
 import { ProductModel } from '../../domain/models'
@@ -17,6 +18,10 @@ const REPOSITORIES_PROVIDERS = {
 }
 
 const USE_CASES_PROVIDERS = {
+  LIST_PRODUCT_USE_CASE: {
+    provide: ListProductUseCase,
+    useClass: ListProductUseCase
+  },
   BLOCK_PRODUCT_USE_CASE: {
     provide: BlockProductUseCase,
     useClass: BlockProductUseCase
