@@ -1,5 +1,5 @@
-import { IDomainEvent } from '@modules/core/domain/entities'
+import { IIntegrationEvent } from '@modules/core/domain/entities'
 
 export interface IMessageBroker {
-  publishEvent(message: IDomainEvent): Promise<void>
+  publishEvent(message: IIntegrationEvent): Promise<void>
 }
