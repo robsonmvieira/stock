@@ -3,6 +3,7 @@ import { ProductBlockedInQueueHandler } from '../../application/handlers'
 import {
   BlockProductUseCase,
   CreateProductUseCase,
+  GetProductByIdUseCase,
   ListProductUseCase
 } from '../../application/use-cases'
 import { ProductTypeORMRepository } from '../repositories'
@@ -21,6 +22,10 @@ const USE_CASES_PROVIDERS = {
   LIST_PRODUCT_USE_CASE: {
     provide: ListProductUseCase,
     useClass: ListProductUseCase
+  },
+  GET_BY_ID_PRODUCT_USE_CASE: {
+    provide: GetProductByIdUseCase,
+    useClass: GetProductByIdUseCase
   },
   BLOCK_PRODUCT_USE_CASE: {
     provide: BlockProductUseCase,

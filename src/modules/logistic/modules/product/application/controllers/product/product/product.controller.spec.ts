@@ -3,6 +3,7 @@ import { ProductController } from './product.controller'
 import {
   BlockProductUseCase,
   CreateProductUseCase,
+  GetProductByIdUseCase,
   ListProductUseCase
 } from '../../../use-cases'
 
@@ -11,6 +12,7 @@ describe('ProductController', () => {
   let createProductUseCase: CreateProductUseCase
   let blockProductUseCase: BlockProductUseCase
   let listProductUseCase: ListProductUseCase
+  let getByIdProductUseCase: GetProductByIdUseCase
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,6 +35,12 @@ describe('ProductController', () => {
           useValue: {
             execute: jest.fn()
           }
+        },
+        {
+          provide: GetProductByIdUseCase,
+          useValue: {
+            execute: jest.fn()
+          }
         }
       ]
     }).compile()
@@ -42,6 +50,9 @@ describe('ProductController', () => {
       module.get<CreateProductUseCase>(CreateProductUseCase)
     blockProductUseCase = module.get<BlockProductUseCase>(BlockProductUseCase)
     listProductUseCase = module.get<ListProductUseCase>(ListProductUseCase)
+    getByIdProductUseCase = module.get<GetProductByIdUseCase>(
+      GetProductByIdUseCase
+    )
   })
 
   it('should be defined', () => {
@@ -49,5 +60,6 @@ describe('ProductController', () => {
     expect(createProductUseCase).toBeDefined()
     expect(blockProductUseCase).toBeDefined()
     expect(listProductUseCase).toBeDefined()
+    expect(getByIdProductUseCase).toBeDefined()
   })
 })
