@@ -12,6 +12,7 @@ import { EmailModule } from '@modules/email/email.module'
 import { RhModule } from '@modules/rh/rh.module'
 import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
 import { LogisticModule } from '@modules/logistic/logistic.module'
+import { DataGenerateModule } from '@modules/data-generate/data-generate.module'
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { LogisticModule } from '@modules/logistic/logistic.module'
     EncryptModule,
     EmailModule,
     RhModule,
-    LogisticModule
+    LogisticModule,
+    DataGenerateModule
   ],
   controllers: [],
   providers: [

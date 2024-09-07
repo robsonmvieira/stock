@@ -33,6 +33,7 @@ import { EventModule } from '@modules/event/event.module'
     ...Object.values(PRODUCT_PROVIDERS.REPOSITORIES_PROVIDERS),
     ...Object.values(PRODUCT_PROVIDERS.DOMAIN_EVENT_HANDLER_PROVIDERS),
     ...Object.values(PRODUCT_PROVIDERS.USE_CASES_PROVIDERS)
-  ]
+  ],
+  exports: ['ICategoryRepository', 'IProductRepository']
 })
 export class ProductModule {}

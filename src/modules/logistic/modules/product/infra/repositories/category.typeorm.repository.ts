@@ -6,6 +6,9 @@ export class CategoryTypeORMRepository
   extends BaseRepository<CategoryModel>
   implements ICategoryRepository
 {
+  async saveMany(categories: CategoryModel[]): Promise<void> {
+    await this.repo.save(categories)
+  }
   async findByName(name: string): Promise<CategoryModel> {
     return await this.repo.findOne({ where: { name } })
   }

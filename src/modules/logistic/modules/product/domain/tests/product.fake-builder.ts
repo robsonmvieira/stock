@@ -14,6 +14,8 @@ export class ProductFakeBuilder<TBuild = any> {
   }
 
   private _id: PropertyOrFactory<ProductId> | undefined = undefined
+  private _categoryIds: string[] | undefined = undefined
+  private _supplierIds: string[] | undefined = undefined
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropertyOrFactory<string> | undefined = _index =>
@@ -58,9 +60,10 @@ export class ProductFakeBuilder<TBuild = any> {
     this.chance.guid({ version: 4 })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private _images: PropertyOrFactory<string[]> | undefined = _index => [
-    this.chance.url()
-  ]
+  private _images: PropertyOrFactory<string[]> | undefined = _index => {
+    const length = this.chance.integer({ min: 1, max: 5 })
+    return Array.from({ length }, () => this.chance.url())
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _discountedPrice: PropertyOrFactory<number> | undefined = _index =>
     this.chance.integer({ min: 1, max: 10 })
@@ -103,9 +106,9 @@ export class ProductFakeBuilder<TBuild = any> {
   private _complaintsCount?: PropertyOrFactory<number> | undefined = _index =>
     this.chance.integer({ min: 1, max: 10000 })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private _blockForSale?: PropertyOrFactory<number> | undefined = _index =>
-    this.chance.integer({ min: 1, max: 10000 })
+  private _blockForSaleQuantity?: PropertyOrFactory<number> | undefined =
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _index => this.chance.integer({ min: 1, max: 10000 })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -150,6 +153,22 @@ export class ProductFakeBuilder<TBuild = any> {
 
   withCategoryId(categoryId: PropertyOrFactory<string>): this {
     this._categoryId = categoryId
+    return this
+  }
+
+  withCategoryIds(categoryIds: string[]): this {
+    if (!categoryIds || categoryIds.length === 0) {
+      throw new Error('Category IDs array cannot be empty')
+    }
+    this._categoryIds = categoryIds
+    return this
+  }
+
+  withSupplierIds(supplierIds: string[]): this {
+    if (!supplierIds || supplierIds.length === 0) {
+      throw new Error('Supplier IDs array cannot be empty')
+    }
+    this._supplierIds = supplierIds
     return this
   }
 
@@ -219,7 +238,7 @@ export class ProductFakeBuilder<TBuild = any> {
   }
 
   withBlockForSale(blockForSale: PropertyOrFactory<number>): this {
-    this._blockForSale = blockForSale
+    this._blockForSaleQuantity = blockForSale
     return this
   }
 
@@ -239,8 +258,12 @@ export class ProductFakeBuilder<TBuild = any> {
           name: this.callFactory(this._name, index),
           description: this.callFactory(this._description, index),
           blockedQuantity: this.callFactory(this._blockedQuantity, index),
-          supplierId: this.callFactory(this._supplierId, index),
-          categoryId: this.callFactory(this._categoryId, index),
+          supplierId: this._supplierIds
+            ? this.chance.pickone(this._supplierIds)
+            : this.chance.guid({ version: 4 }),
+          categoryId: this._categoryIds
+            ? this.chance.pickone(this._categoryIds)
+            : this.chance.guid({ version: 4 }),
           invoiceNumber: this.callFactory(this._invoiceNumber, index),
           price: this.callFactory(this._price, index),
           images: this.callFactory(this._images, index),
@@ -254,6 +277,10 @@ export class ProductFakeBuilder<TBuild = any> {
           totalSalesValue: this.callFactory(this._totalSalesValue, index),
           totalUnitsSold: this.callFactory(this._totalUnitsSold, index),
           complaintsCount: this.callFactory(this._complaintsCount, index),
+          blockForSaleQuantity: this.callFactory(
+            this._blockForSaleQuantity,
+            index
+          ),
           sku: this.callFactory(this._sku, index),
           details: this.callFactory(this._details, index),
           minimalInStockQuantityPermited: this.callFactory(
@@ -272,6 +299,53 @@ export class ProductFakeBuilder<TBuild = any> {
       ? factoryOrValue(index)
       : factoryOrValue
   }
+
+  // build(): TBuild {
+  //   const products = new Array(this.countsObjs)
+  //     .fill(undefined)
+  //     .map((_, index) => {
+  //       const product = new Product({
+  //         id: !this._id ? undefined : this.callFactory(this._id, index),
+  //         name: this.callFactory(this._name, index),
+  //         description: this.callFactory(this._description, index),
+  //         blockedQuantity: this.callFactory(this._blockedQuantity, index),
+  //         supplierId: this.callFactory(this._supplierId, index),
+  //         categoryId: this.callFactory(this._categoryId, index),
+  //         invoiceNumber: this.callFactory(this._invoiceNumber, index),
+  //         price: this.callFactory(this._price, index),
+  //         images: this.callFactory(this._images, index),
+  //         discountedPrice: this.callFactory(this._discountedPrice, index),
+  //         stockQuantity: this.callFactory(this._stockQuantity, index),
+  //         unitPrice: this.callFactory(this._unitPrice, index),
+  //         totalAmount: this.callFactory(this._totalAmount, index),
+  //         status: this.callFactory(this._status, index),
+  //         ratings: this.callFactory(this._ratings, index),
+  //         reviewsCount: this.callFactory(this._reviewsCount, index),
+  //         totalSalesValue: this.callFactory(this._totalSalesValue, index),
+  //         totalUnitsSold: this.callFactory(this._totalUnitsSold, index),
+  //         complaintsCount: this.callFactory(this._complaintsCount, index),
+  //         blockForSaleQuantity: this.callFactory(
+  //           this._blockForSaleQuantity,
+  //           index
+  //         ),
+  //         sku: this.callFactory(this._sku, index),
+  //         details: this.callFactory(this._details, index),
+  //         minimalInStockQuantityPermited: this.callFactory(
+  //           this._minimalInStockQuantityPermited,
+  //           index
+  //         )
+  //       })
+
+  //       return product
+  //     })
+  //   return this.countsObjs === 1 ? (products[0] as any) : products
+  // }
+
+  // private callFactory(factoryOrValue: PropertyOrFactory<any>, index: number) {
+  //   return typeof factoryOrValue === 'function'
+  //     ? factoryOrValue(index)
+  //     : factoryOrValue
+  // }
 
   private nameGenerate() {
     const firstName = this.chance.capitalize(this.chance.word({ length: 5 }))
@@ -388,5 +462,9 @@ export class ProductFakeBuilder<TBuild = any> {
 
   get updated_at() {
     return this.getValue('updated_at')
+  }
+
+  get blockForSaleQuantity() {
+    return this.getValue('blockForSaleQuantity')
   }
 }
