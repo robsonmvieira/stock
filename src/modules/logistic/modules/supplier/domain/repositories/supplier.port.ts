@@ -3,4 +3,5 @@ import { SupplierModel } from '../models/supplier.model'
 
 export interface ISupplierRepository extends IRepository<SupplierModel> {
   findByDocument(document: string): Promise<SupplierModel>
+  saveMany(suppliers: SupplierModel[]): Promise<void>
 }

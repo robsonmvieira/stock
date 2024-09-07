@@ -1,6 +1,7 @@
 import { Entity } from '@modules/core/domain/entities'
 import { ValueObject } from '@modules/core/domain/valueObject'
 import { CategoryId } from '../valueObject/category.uuid'
+import { CategoryFakeBuilder } from '../tests'
 
 type CreateCategoryCommand = {
   name: string
@@ -50,6 +51,10 @@ export class Category extends Entity {
     })
   }
 
+  static fake() {
+    return CategoryFakeBuilder
+  }
+
   changeName(newName: string) {
     if (!newName) {
       this.addErrorOnContainer('Nome inválido', 'nome')
@@ -72,9 +77,10 @@ export class Category extends Entity {
   }
   toJSON() {
     return {
-      id: this.id,
+      id: this.id.id,
       name: this.name,
-      description: this.description
+      description: this.description,
+      products: this.products
     }
   }
 }
