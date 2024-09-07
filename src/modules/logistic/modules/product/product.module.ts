@@ -15,10 +15,17 @@ import { SharedModule } from '@modules/shared/shared.module'
 import { SupplierModule } from '../supplier/supplier.module'
 import { PRODUCT_PROVIDERS } from './infra/providers'
 import { EventModule } from '@modules/event/event.module'
+import { RabbitMqBrokerModule } from '@modules/rabbit-mq-broker/rabbit-mq-broker.module'
 
 @Global()
 @Module({
-  imports: [DatabaseModule, SharedModule, SupplierModule, EventModule],
+  imports: [
+    DatabaseModule,
+    SharedModule,
+    SupplierModule,
+    EventModule,
+    RabbitMqBrokerModule.forFeature()
+  ],
   controllers: [CategoryController, ProductController],
   providers: [
     CreateCategoryUseCase,
