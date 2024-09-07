@@ -1,11 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { ProductController } from './product.controller'
-import { BlockProductUseCase, CreateProductUseCase } from '../../../use-cases'
+import {
+  BlockProductUseCase,
+  CreateProductUseCase,
+  ListProductUseCase
+} from '../../../use-cases'
 
 describe('ProductController', () => {
   let controller: ProductController
   let createProductUseCase: CreateProductUseCase
   let blockProductUseCase: BlockProductUseCase
+  let listProductUseCase: ListProductUseCase
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +27,12 @@ describe('ProductController', () => {
           useValue: {
             execute: jest.fn()
           }
+        },
+        {
+          provide: ListProductUseCase,
+          useValue: {
+            execute: jest.fn()
+          }
         }
       ]
     }).compile()
@@ -30,11 +41,13 @@ describe('ProductController', () => {
     createProductUseCase =
       module.get<CreateProductUseCase>(CreateProductUseCase)
     blockProductUseCase = module.get<BlockProductUseCase>(BlockProductUseCase)
+    listProductUseCase = module.get<ListProductUseCase>(ListProductUseCase)
   })
 
   it('should be defined', () => {
     expect(controller).toBeDefined()
     expect(createProductUseCase).toBeDefined()
     expect(blockProductUseCase).toBeDefined()
+    expect(listProductUseCase).toBeDefined()
   })
 })
