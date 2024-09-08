@@ -20,7 +20,7 @@ import { CreateProductDto } from '../../../use-cases/product/create-product-use-
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express'
 @ApiTags('Product')
-@Controller('product')
+@Controller('products')
 export class ProductController {
   @Inject() private readonly createProductUseCase: CreateProductUseCase
   @Inject() private readonly blockeProductUseCase: BlockProductUseCase
@@ -76,7 +76,7 @@ export class ProductController {
     return response.status(200).json(data)
   }
 
-  @Get('block-product/:id')
+  @Get('block/:id')
   async blockeProduct(@Res() response: Response, @Param('id') id: string) {
     const data = await this.blockeProductUseCase.execute(id)
 

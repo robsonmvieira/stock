@@ -27,7 +27,7 @@ export class ProductBlockedEvent implements IDomainEvent {
   getIntegrationEvent(): IIntegrationEvent {
     return new ProductBlockedIntegrationEvent({
       data: this.data,
-      eventName: ProductBlockedEvent.constructor.name,
+      eventName: ProductBlockedIntegrationEvent.name,
       createdBy: this.createdBy
     })
   }

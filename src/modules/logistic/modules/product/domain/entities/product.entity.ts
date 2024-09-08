@@ -180,6 +180,7 @@ export class Product extends AggregateRoot {
 
   blockProduct(userLoggedId: string): void {
     this.is_blocked = true
+    this.updated_at = new Date()
     this.applyEvent(
       new ProductBlockedEvent(this.id, Product.name, 1, userLoggedId, {
         id: this.id.toString()

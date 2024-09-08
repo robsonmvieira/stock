@@ -1,8 +1,8 @@
-import { ProductBlockedEvent } from '@modules/logistic/modules/product/domain/events'
+import { ProductBlockedIntegrationEvent } from '@modules/logistic/modules/product/domain/events'
 
 export const EVENTS_CONFIG = {
-  [ProductBlockedEvent.name]: {
-    routingKey: ProductBlockedEvent.name,
-    exchange: 'amqp.direct'
+  [ProductBlockedIntegrationEvent.name]: {
+    routing_key: ProductBlockedIntegrationEvent.name,
+    exchange: 'amq.direct'
   }
 }

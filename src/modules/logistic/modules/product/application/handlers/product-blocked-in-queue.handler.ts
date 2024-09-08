@@ -13,6 +13,5 @@ export class ProductBlockedInQueueHandler implements IIntegrationEventHandler {
     integrationEvent: ProductBlockedIntegrationEvent
   ): Promise<void> {
     await this.messageBroker.publishEvent(integrationEvent)
-    console.log(`Product ${integrationEvent.data} was blocked!`)
   }
 }

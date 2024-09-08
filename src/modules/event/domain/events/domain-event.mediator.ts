@@ -10,7 +10,6 @@ export class DomainEventMediator {
   async publish(event: AggregateRoot) {
     for (const domainEvent of event.events) {
       const eventName = domainEvent.constructor.name
-      console.log(eventName)
       event.markEventAsDispatched(domainEvent)
       await this.eventEmitter.emitAsync(eventName, domainEvent)
     }
@@ -20,7 +19,6 @@ export class DomainEventMediator {
     for (const domainEvent of aggregate.events) {
       const integrationEvent = domainEvent.getIntegrationEvent?.()
       if (!integrationEvent) continue
-
       await this.eventEmitter.emitAsync(
         integrationEvent.eventName,
         integrationEvent
