@@ -2,6 +2,7 @@ import { Product } from '../../domain/entities'
 import { ProductModel } from '../../domain/models'
 import { ProductId } from '../../domain/valueObject'
 import { CreateProductDtoProps } from '../use-cases/product/create-product-use-case/dto'
+import { ProductOutput } from '../use-cases/product/list-product-use-case/dto'
 
 export class ProductMapper {
   static fromDtoToEntity(dto: CreateProductDtoProps): Product {
@@ -53,6 +54,11 @@ export class ProductMapper {
   static fromEntityToModel(entity: Product): ProductModel {
     return new ProductModel({
       id: entity.id.id,
+      created_at: entity.created_at,
+      updated_at: entity.updated_at,
+      deleted_at: entity.deleted_at,
+      is_deleted: entity.is_deleted,
+      is_blocked: entity.is_blocked,
       name: entity.name,
       description: entity.description,
       price: entity.price,
@@ -76,5 +82,9 @@ export class ProductMapper {
       status: entity.status,
       categoryId: entity.categoryId
     })
+  }
+
+  static fromModelToOutput(model: ProductModel): ProductOutput {
+    return new ProductOutput(model)
   }
 }

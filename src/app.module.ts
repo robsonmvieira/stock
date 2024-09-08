@@ -12,6 +12,8 @@ import { EmailModule } from '@modules/email/email.module'
 import { RhModule } from '@modules/rh/rh.module'
 import { EmployeeModule } from '@modules/rh/modules/employee/employee.module'
 import { LogisticModule } from '@modules/logistic/logistic.module'
+import { DataGenerateModule } from '@modules/data-generate/data-generate.module'
+import { RabbitMqBrokerModule } from '@modules/rabbit-mq-broker/rabbit-mq-broker.module'
 
 @Module({
   imports: [
@@ -24,7 +26,9 @@ import { LogisticModule } from '@modules/logistic/logistic.module'
     EncryptModule,
     EmailModule,
     RhModule,
-    LogisticModule
+    LogisticModule,
+    DataGenerateModule,
+    RabbitMqBrokerModule.forRoot()
   ],
   controllers: [],
   providers: [

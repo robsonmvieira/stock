@@ -7,7 +7,7 @@ import {
 } from '../valueObjects/address.vo'
 
 import { CNPJVO } from '../valueObjects'
-import { SupplierFakerBuilder } from '../tests/supplier.fake-builder'
+import { SupplierFakeBuilder } from '../tests/supplier.fake-builder'
 
 export type CreateSupplierCommand = {
   name: string
@@ -97,7 +97,7 @@ export class Supplier extends Entity {
   }
 
   static fake() {
-    return SupplierFakerBuilder
+    return SupplierFakeBuilder
   }
   validate() {
     this.someAddressIsInvalid()
@@ -188,7 +188,18 @@ export class Supplier extends Entity {
       lastName: this.lastName,
       email: this.email,
       phone: this.phone,
-      addresses: this.addresses
+      addresses: [
+        ...this.addresses.map(address => ({
+          street: address.value.street,
+          number: address.value.number,
+          complement: address.value.complement,
+          zipCode: address.value.postalCode,
+          city: address.value.city,
+          neighborhood: address.value.neighborhood,
+          state: address.value.state,
+          country: address.value.country
+        }))
+      ]
     }
   }
 }

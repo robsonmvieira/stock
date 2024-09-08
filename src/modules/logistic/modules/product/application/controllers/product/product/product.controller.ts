@@ -1,21 +1,31 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
+  Param,
   Post,
   Res,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
-import { CreateProductUseCase } from '../../../use-cases'
+import {
+  BlockProductUseCase,
+  CreateProductUseCase,
+  GetProductByIdUseCase,
+  ListProductUseCase
+} from '../../../use-cases'
 import { Response } from 'express'
 import { CreateProductDto } from '../../../use-cases/product/create-product-use-case/dto'
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express'
 @ApiTags('Product')
-@Controller('product')
+@Controller('products')
 export class ProductController {
   @Inject() private readonly createProductUseCase: CreateProductUseCase
+  @Inject() private readonly blockeProductUseCase: BlockProductUseCase
+  @Inject() private readonly listProductUseCase: ListProductUseCase
+  @Inject() private readonly getByIdProductUseCase: GetProductByIdUseCase
 
   @Post()
   @UseInterceptors(FileInterceptor('images'))
@@ -48,5 +58,31 @@ export class ProductController {
       return response.status(400).json(data)
     }
     return response.status(201).json(data)
+  }
+
+  @Get()
+  async list(@Res() response: Response) {
+    const data = await this.listProductUseCase.execute()
+    return response.status(200).json(data)
+  }
+
+  @Get(':id')
+  async getById(@Res() response: Response, @Param('id') id: string) {
+    const data = await this.getByIdProductUseCase.execute(id)
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+
+    return response.status(200).json(data)
+  }
+
+  @Get('block/:id')
+  async blockeProduct(@Res() response: Response, @Param('id') id: string) {
+    const data = await this.blockeProductUseCase.execute(id)
+
+    if (data.hasError) {
+      return response.status(400).json(data)
+    }
+    return response.status(200).json(data)
   }
 }

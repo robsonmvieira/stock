@@ -1,4 +1,5 @@
 import { UuidVO } from '../valueObject'
+import { IIntegrationEvent } from './integrationevent.port'
 
 export interface IDomainEvent {
   aggregateId: UuidVO
@@ -6,4 +7,6 @@ export interface IDomainEvent {
   aggregateVersion: number
   createdAt: Date
   createdBy: string
+
+  getIntegrationEvent?(): IIntegrationEvent
 }

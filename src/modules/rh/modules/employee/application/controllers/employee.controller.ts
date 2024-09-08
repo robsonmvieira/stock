@@ -62,7 +62,7 @@ export class EmployeeController {
       //   }
       // }),
       map(report => {
-        console.log(id)
+        console.log('employee controller => ', id)
 
         return {
           type: 'message',

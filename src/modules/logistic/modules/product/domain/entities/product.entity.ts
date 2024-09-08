@@ -3,6 +3,7 @@ import { ValueObject } from '@modules/core/domain/valueObject'
 import { ProductId } from '../valueObject'
 import { ProductStatus } from '../enum/product-status.enum'
 import { NewProductCreatedEvent, ProductBlockedEvent } from '../events'
+import { ProductFakeBuilder } from '../tests'
 
 type CreateProductCommand = {
   // basic information
@@ -173,8 +174,13 @@ export class Product extends AggregateRoot {
     )
   }
 
+  static fake() {
+    return ProductFakeBuilder
+  }
+
   blockProduct(userLoggedId: string): void {
     this.is_blocked = true
+    this.updated_at = new Date()
     this.applyEvent(
       new ProductBlockedEvent(this.id, Product.name, 1, userLoggedId, {
         id: this.id.toString()
